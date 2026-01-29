@@ -1,0 +1,81 @@
+---
+title: "Les fondamentaux du SEO technique en 2024"
+description: "Un guide complet sur les aspects techniques du SEO qui font vraiment la différence pour votre site web."
+date: 2024-01-10
+tags: ["SEO", "Web", "Performance"]
+---
+
+Le SEO technique reste le fondement d'une stratégie de référencement réussie. En 2024, certains aspects sont devenus non-négociables.
+
+## Core Web Vitals : toujours d'actualité
+
+Google continue de valoriser l'expérience utilisateur à travers les Core Web Vitals :
+
+- **LCP (Largest Contentful Paint)** : Moins de 2.5 secondes
+- **FID/INP (Interaction to Next Paint)** : Moins de 200ms
+- **CLS (Cumulative Layout Shift)** : Moins de 0.1
+
+### Comment les améliorer ?
+
+```javascript
+// Exemple : Preload des ressources critiques
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+## Crawlabilité et indexation
+
+### Le fichier robots.txt
+
+Un robots.txt bien configuré est essentiel :
+
+```
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://example.com/sitemap.xml
+```
+
+### Sitemap XML
+
+Votre sitemap doit :
+- Être à jour automatiquement
+- Ne contenir que les URLs canoniques
+- Inclure les dates de modification
+
+## Architecture de l'information
+
+Une bonne architecture aide les moteurs de recherche à comprendre votre site :
+
+1. **Hiérarchie claire** : Maximum 3 clics pour atteindre n'importe quelle page
+2. **URLs descriptives** : `/blog/seo-technique-2024` plutôt que `/p?id=123`
+3. **Maillage interne** : Liens contextuels entre contenus liés
+
+## HTTPS et sécurité
+
+En 2024, HTTPS est obligatoire. Mais allez plus loin :
+
+- Headers de sécurité (CSP, HSTS)
+- Certificat SSL valide et renouvelé
+- Pas de contenu mixte (HTTP/HTTPS)
+
+## Données structurées
+
+Le Schema.org permet d'enrichir vos résultats dans les SERP :
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Les fondamentaux du SEO technique",
+  "author": {
+    "@type": "Person",
+    "name": "Pierrick Deniel"
+  }
+}
+```
+
+## Conclusion
+
+Le SEO technique n'est pas sexy, mais c'est ce qui permet à tout le reste de fonctionner. Investissez du temps dans ces fondamentaux avant de vous concentrer sur le contenu.

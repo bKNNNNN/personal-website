@@ -1,0 +1,58 @@
+---
+// Minimal theme toggle
+---
+
+<button
+  id="theme-toggle"
+  class="text-[var(--color-text-muted)] text-sm"
+  aria-label="Toggle theme"
+>
+  <span class="light-label">Dark</span>
+  <span class="dark-label hidden">Light</span>
+</button>
+
+<style>
+  [data-theme="dark"] .dark-label {
+    display: inline;
+  }
+
+  [data-theme="dark"] .light-label {
+    display: none;
+  }
+</style>
+
+<script>
+  function setupThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+
+    const updateLabels = () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const darkLabel = toggle?.querySelector('.dark-label');
+      const lightLabel = toggle?.querySelector('.light-label');
+
+      if (darkLabel && lightLabel) {
+        if (isDark) {
+          darkLabel.classList.remove('hidden');
+          lightLabel.classList.add('hidden');
+        } else {
+          darkLabel.classList.add('hidden');
+          lightLabel.classList.remove('hidden');
+        }
+      }
+    };
+
+    toggle?.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateLabels();
+    });
+
+    updateLabels();
+  }
+
+  setupThemeToggle();
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+  wide?: boolean;
+}
+
+const { class: className = '', wide = false } = Astro.props;
+const maxWidth = wide ? 'var(--width-wide)' : 'var(--width-content)';
+---
+
+<div
+  class:list={['mx-auto px-[var(--spacing-page)]', className]}
+  style={`max-width: ${maxWidth}`}
+>
+  <slot />
+</div>

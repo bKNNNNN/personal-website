@@ -1,0 +1,74 @@
+---
+title: "Construire un digital garden avec Astro"
+description: "Pourquoi et comment j'ai choisi Astro pour créer mon site personnel, et les leçons apprises en chemin."
+date: 2024-01-05
+tags: ["Dev", "Astro", "Web"]
+---
+
+Après avoir essayé Next.js, Gatsby, Hugo, et même WordPress, j'ai finalement trouvé mon bonheur avec Astro. Voici pourquoi.
+
+## Pourquoi un "digital garden" ?
+
+Contrairement à un blog traditionnel chronologique, un digital garden est :
+
+- **Évolutif** : Les contenus sont mis à jour, pas figés dans le temps
+- **Interconnecté** : Les idées se lient entre elles
+- **Personnel** : C'est un espace de réflexion, pas une vitrine
+
+## Pourquoi Astro ?
+
+### Performance par défaut
+
+Astro génère du HTML statique par défaut. Pas de JavaScript envoyé au client sauf si nécessaire.
+
+```astro
+---
+// Ce code ne s'exécute que côté serveur
+const posts = await getCollection('blog');
+---
+
+<!-- HTML statique, zéro JS client -->
+<ul>
+  {posts.map(post => (
+    <li>{post.data.title}</li>
+  ))}
+</ul>
+```
+
+### Content Collections
+
+La gestion du contenu avec les Content Collections est élégante :
+
+```typescript
+const blog = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    tags: z.array(z.string()),
+  }),
+});
+```
+
+### Flexibilité
+
+Besoin d'interactivité ? Astro supporte React, Vue, Svelte, et plus. Chaque composant ne charge du JS que si nécessaire.
+
+## Stack technique
+
+Pour ce site, j'utilise :
+
+- **Astro 5** pour le framework
+- **TailwindCSS** pour le styling
+- **MDX** pour le contenu enrichi
+- **Astro DB** pour le guestbook
+- **Vercel** pour l'hébergement
+
+## Leçons apprises
+
+1. **Commencer simple** : J'ai d'abord créé une version minimale, puis itéré
+2. **Le contenu d'abord** : Pas besoin d'un design parfait pour commencer à écrire
+3. **Éviter la sur-ingénierie** : Un site statique n'a pas besoin de state management global
+
+## Conclusion
+
+Astro m'a permis de créer exactement le site que je voulais : rapide, simple à maintenir, et agréable à développer. Si vous cherchez une solution pour votre propre digital garden, je le recommande vivement.

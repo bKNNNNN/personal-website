@@ -1,17 +1,118 @@
 ---
+import { getCollection } from 'astro:content';
+import { ConvexHttpClient } from 'convex/browser';
+import { anyApi } from 'convex/server';
+import BaseLayout from '@layouts/BaseLayout.astro';
 
+const api = anyApi;
+
+// Fetch recent posts from Content Collections
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+// Fetch recent projects from Content Collections
+const allProjects = await getCollection('projects');
+const recentProjects = allProjects
+  .sort((a, b) => b.data.year - a.data.year)
+  .slice(0, 3);
+
+// Fetch recent guestbook messages from Convex
+const convexUrl = import.meta.env.CONVEX_URL || import.meta.env.PUBLIC_CONVEX_URL;
+let guestbookMessages: Array<{ _id: string; name: string; message: string; createdAt: number }> = [];
+
+if (convexUrl) {
+  try {
+    const client = new ConvexHttpClient(convexUrl);
+    guestbookMessages = await client.query(api.guestbook.listRecent, { limit: 3 });
+  } catch (e) {
+    console.error('Failed to fetch guestbook messages:', e);
+  }
+}
+
+// Format date helper
+function formatDate(timestamp: number): string {
+  return new Date(timestamp).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+function formatPostDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home" description="Personal website of Pierrick Deniel - SEO Consultant & AI Automation">
+  <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
+    <!-- Hero Section -->
+    <section class="py-16">
+      <p class="text-[var(--color-text-muted)] mb-8 leading-relaxed">
+        SEO Consultant & AI Automation specialist. I help businesses improve their online visibility and automate processes with artificial intelligence.
+      </p>
+    </section>
+
+    <!-- Recent Posts Section -->
+    <section class="py-8 border-t border-[var(--color-border)]">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2>Writing</h2>
+        <a href="/blog" class="text-sm text-[var(--color-text-muted)]">View all →</a>
+      </div>
+      <div class="space-y-4">
+        {recentPosts.map((post) => (
+          <a href={`/blog/${post.id}`} class="block group">
+            <div class="flex items-baseline justify-between gap-4">
+              <span class="text-[var(--color-text)] group-hover:opacity-60">{post.data.title}</span>
+              <span class="text-sm text-[var(--color-text-muted)] shrink-0">{formatPostDate(post.data.date)}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Recent Projects Section -->
+    <section class="py-8 border-t border-[var(--color-border)]">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2>Projects</h2>
+        <a href="/projects" class="text-sm text-[var(--color-text-muted)]">View all →</a>
+      </div>
+      <div class="space-y-4">
+        {recentProjects.map((project) => (
+          <a href={project.data.url || `/projects/${project.id}`} class="block group" target={project.data.url ? "_blank" : undefined} rel={project.data.url ? "noopener noreferrer" : undefined}>
+            <div class="flex items-baseline justify-between gap-4">
+              <span class="text-[var(--color-text)] group-hover:opacity-60">{project.data.title}</span>
+              <span class="text-sm text-[var(--color-text-muted)] shrink-0">{project.data.year}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Guestbook Preview Section -->
+    <section class="py-8 border-t border-[var(--color-border)]">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2>Guestbook</h2>
+        <a href="/guestbook" class="text-sm text-[var(--color-text-muted)]">Sign →</a>
+      </div>
+      <div class="space-y-3">
+        {guestbookMessages.length > 0 ? (
+          guestbookMessages.map((msg) => (
+            <div class="text-sm">
+              <p class="text-[var(--color-text)]">"{msg.message}"</p>
+              <p class="text-[var(--color-text-muted)] mt-1">— {msg.name}, {formatDate(msg.createdAt)}</p>
+            </div>
+          ))
+        ) : (
+          <p class="text-[var(--color-text-muted)] text-sm">
+            Be the first to leave a message.
+          </p>
+        )}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
