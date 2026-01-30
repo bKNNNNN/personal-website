@@ -1,0 +1,179 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { t } from '@/lib/i18n';
+
+const locale = 'fr';
+---
+
+<BaseLayout title={t(locale, 'colophonTitle')} description="Comment ce site est fait : typographie, principes de design et stack technique." locale={locale}>
+  <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)] py-16">
+    <header class="mb-12">
+      <h1>{t(locale, 'colophonTitle')}</h1>
+      <p class="text-[var(--color-text-muted)] mt-2">
+        {t(locale, 'colophonSubtitle')}
+      </p>
+    </header>
+
+    <div class="space-y-16">
+      <!-- Introduction -->
+      <section>
+        <p class="text-[var(--color-text-muted)]">
+          {t(locale, 'colophonIntro')}
+        </p>
+      </section>
+
+      <!-- Typography -->
+      <section>
+        <h2 class="mb-6">Typographie</h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-2">Corps</h3>
+            <p class="text-2xl font-medium mb-2">Satoshi</p>
+            <p class="text-sm text-[var(--color-text-muted)]">
+              Une sans-serif moderniste de Indian Type Foundry. Elle trouve un équilibre entre précision géométrique et chaleur, avec un 'a' et un 'g' à deux étages qui ajoutent du caractère sans sacrifier la lisibilité.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-2">Code</h3>
+            <p class="text-2xl font-mono mb-2">JetBrains Mono</p>
+            <p class="text-sm text-[var(--color-text-muted)]">
+              Une police monospace conçue pour les développeurs, avec des ligatures de programmation et une excellente lisibilité aux petites tailles.
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-[var(--color-border)]">
+            <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Échelle fluide</h3>
+            <p class="text-sm text-[var(--color-text-muted)] mb-3">
+              La typographie est mise à l'échelle avec un système de type fluide de <a href="https://utopia.fyi" target="_blank" rel="noopener noreferrer">Utopia</a>. Les tailles de police s'interpolent en douceur entre les viewports mobile et desktop.
+            </p>
+            <ul class="text-sm text-[var(--color-text-muted)] space-y-1">
+              <li>Viewport min : <code>320px</code> @ 16px base, ratio 1.2</li>
+              <li>Viewport max : <code>1240px</code> @ 18px base, ratio 1.25</li>
+              <li>Hauteur de ligne : <code>1.6</code></li>
+              <li>Espacement des lettres : <code>-0.02em</code> à <code>-0.03em</code> (titres)</li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-[var(--color-border)]">
+            <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Influences</h3>
+            <ul class="text-sm space-y-1">
+              <li><a href="https://utopia.fyi" target="_blank" rel="noopener noreferrer">Utopia</a> pour les échelles de type et d'espace fluides</li>
+              <li><a href="https://practicaltypography.com/" target="_blank" rel="noopener noreferrer">Practical Typography</a> par Matthew Butterick</li>
+              <li><a href="https://fontreviewjournal.com/" target="_blank" rel="noopener noreferrer">Font Review Journal</a> par Bethany Heck</li>
+              <li><em>The Elements of Typographic Style</em> par Robert Bringhurst</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Design -->
+      <section>
+        <h2 class="mb-6">Design</h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Principes</h3>
+            <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+              <li>Minimaliste et centré sur le contenu</li>
+              <li>Palette noir et blanc, sans couleurs d'accent</li>
+              <li>Support des modes clair et sombre</li>
+              <li>Liens soulignés, avec lueur subtile au survol en mode sombre</li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-[var(--color-border)]">
+            <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Couleurs</h3>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <p class="font-medium mb-2">Clair</p>
+                <ul class="text-[var(--color-text-muted)] space-y-1">
+                  <li>Fond : <code>#fcfcfc</code></li>
+                  <li>Texte : <code>#202020</code></li>
+                  <li>Atténué : <code>#6b6b6b</code></li>
+                </ul>
+              </div>
+              <div>
+                <p class="font-medium mb-2">Sombre</p>
+                <ul class="text-[var(--color-text-muted)] space-y-1">
+                  <li>Fond : <code>#141414</code></li>
+                  <li>Texte : <code>#f0f0f0</code></li>
+                  <li>Atténué : <code>#8a8a8a</code></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technology -->
+      <section>
+        <h2 class="mb-6">Technologie</h2>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-[var(--color-border)]">
+              <tr>
+                <td class="py-3 pr-4 text-[var(--color-text-muted)]">Framework</td>
+                <td class="py-3"><a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a></td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 text-[var(--color-text-muted)]">Style</td>
+                <td class="py-3"><a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind CSS</a></td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 text-[var(--color-text-muted)]">Contenu</td>
+                <td class="py-3"><a href="https://mdxjs.com" target="_blank" rel="noopener noreferrer">MDX</a></td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 text-[var(--color-text-muted)]">Backend</td>
+                <td class="py-3"><a href="https://convex.dev" target="_blank" rel="noopener noreferrer">Convex</a></td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 text-[var(--color-text-muted)]">Hébergement</td>
+                <td class="py-3"><a href="https://vercel.com" target="_blank" rel="noopener noreferrer">Vercel</a></td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4 text-[var(--color-text-muted)]">Audio</td>
+                <td class="py-3"><a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer">ElevenLabs</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tools -->
+      <section>
+        <h2 class="mb-6">Outils</h2>
+
+        <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+          <li>Éditeur : <a href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a></li>
+          <li>Terminal : Bash</li>
+          <li>Gestion de version : Git + GitHub</li>
+        </ul>
+      </section>
+
+      <!-- Accessibility & Performance -->
+      <section>
+        <h2 class="mb-6">Accessibilité & Performance</h2>
+
+        <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+          <li>Respecte <code>prefers-reduced-motion</code></li>
+          <li>Pas de trackers, pas d'analytics</li>
+          <li>Images optimisées</li>
+          <li>Polices variables pour réduire le poids</li>
+        </ul>
+      </section>
+
+      <!-- Open Source -->
+      <section>
+        <h2 class="mb-6">Open Source</h2>
+
+        <p class="text-sm text-[var(--color-text-muted)]">
+          Le code source de ce site est disponible sur <a href="https://github.com/bKNNNNN/personal-website" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        </p>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

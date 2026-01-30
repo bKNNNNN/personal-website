@@ -1,0 +1,158 @@
+---
+import { ConvexHttpClient } from 'convex/browser';
+import { anyApi } from 'convex/server';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { t } from '@/lib/i18n';
+
+const locale = 'fr';
+const api = anyApi;
+
+const convexUrl = import.meta.env.CONVEX_URL || import.meta.env.PUBLIC_CONVEX_URL;
+
+let messages: Array<{ _id: string; name: string; message: string; createdAt: number }> = [];
+let error = '';
+let success = '';
+
+// Create Convex client
+const client = convexUrl ? new ConvexHttpClient(convexUrl) : null;
+
+// Handle form submission
+if (Astro.request.method === 'POST' && client) {
+  try {
+    const formData = await Astro.request.formData();
+    const name = formData.get('name')?.toString().trim();
+    const message = formData.get('message')?.toString().trim();
+    const honeypot = formData.get('website')?.toString();
+
+    if (honeypot) {
+      error = t(locale, 'errorGeneric');
+    } else if (!name || !message) {
+      error = t(locale, 'errorFillFields');
+    } else if (name.length > 50) {
+      error = t(locale, 'errorNameTooLong');
+    } else if (message.length > 500) {
+      error = t(locale, 'errorMessageTooLong');
+    } else {
+      await client.mutation(api.guestbook.add, { name, message });
+      success = t(locale, 'successMessage');
+    }
+  } catch (e) {
+    error = e instanceof Error ? e.message : t(locale, 'errorGeneric');
+    console.error(e);
+  }
+}
+
+// Fetch all messages
+if (client) {
+  try {
+    messages = await client.query(api.guestbook.list, {});
+  } catch (e) {
+    console.error('Failed to fetch guestbook messages:', e);
+  }
+}
+
+// Format date helper
+function formatDate(timestamp: number): string {
+  return new Date(timestamp).toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout title={t(locale, 'guestbookTitle')} description="Laissez un message dans mon livre d'or" locale={locale}>
+  <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)] py-16">
+    <header class="mb-12">
+      <h1>{t(locale, 'guestbookTitle')}</h1>
+      <p class="text-[var(--color-text-muted)] mt-2">
+        {t(locale, 'guestbookSubtitle')}
+      </p>
+    </header>
+
+    {!convexUrl && (
+      <div class="p-4 mb-8 text-sm text-[var(--color-text-muted)] border border-[var(--color-border)]">
+        {t(locale, 'guestbookNotConfigured')}
+      </div>
+    )}
+
+    <!-- Form -->
+    <form method="POST" class="mb-16 space-y-4">
+      {error && (
+        <div class="p-3 text-sm border border-[var(--color-border)] text-[var(--color-text)]">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div class="p-3 text-sm border border-[var(--color-border)] text-[var(--color-text)]">
+          {success}
+        </div>
+      )}
+
+      <div>
+        <label for="name" class="block text-sm text-[var(--color-text-muted)] mb-1">
+          {t(locale, 'nameLabel')}
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          maxlength="50"
+          class="w-full px-3 py-2 border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)]"
+          placeholder={t(locale, 'namePlaceholder')}
+        />
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm text-[var(--color-text-muted)] mb-1">
+          {t(locale, 'messageLabel')}
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          maxlength="500"
+          rows="3"
+          class="w-full px-3 py-2 border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:outline-none focus:border-[var(--color-text)] resize-none"
+          placeholder={t(locale, 'messagePlaceholder')}
+        ></textarea>
+      </div>
+
+      <!-- Honeypot -->
+      <div class="hidden" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button
+        type="submit"
+        class="px-4 py-2 bg-[var(--color-text)] text-[var(--color-bg)] text-sm hover:opacity-80 transition-opacity"
+        disabled={!convexUrl}
+      >
+        {t(locale, 'signButton')}
+      </button>
+    </form>
+
+    <!-- Messages -->
+    <section>
+      <h2 class="mb-6">{t(locale, 'messagesTitle')} ({messages.length})</h2>
+
+      {messages.length === 0 ? (
+        <p class="text-[var(--color-text-muted)]">
+          {t(locale, 'beFirstMessage')}
+        </p>
+      ) : (
+        <div class="space-y-6">
+          {messages.map((msg) => (
+            <div class="pb-6 border-b border-[var(--color-border)] last:border-0">
+              <p class="text-[var(--color-text)]">{msg.message}</p>
+              <p class="text-sm text-[var(--color-text-muted)] mt-2">
+                — {msg.name}, {formatDate(msg.createdAt)}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  </main>
+</BaseLayout>

@@ -6,11 +6,32 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://pierrickdeniel.fr',
+  site: 'https://pierrickdeniel.com',
   output: 'server',
   adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [mdx(), sitemap()],
+  i18n: {
+    locales: ['en', 'fr'],
+    defaultLocale: 'en',
+    routing: {
+      prefixDefaultLocale: false,
+    },
+    domains: {
+      fr: 'https://pierrickdeniel.fr',
+    },
+  },
+  integrations: [
+    mdx(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en',
+          fr: 'fr',
+        },
+      },
+    }),
+  ],
 });

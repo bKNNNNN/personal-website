@@ -1,19 +1,27 @@
 ---
 import ThemeToggle from '@components/ui/ThemeToggle.astro';
+import { t, type Locale } from '@/lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
 
 const navItems = [
-  { label: 'Now', href: '/now' },
-  { label: 'Guestbook', href: '/guestbook' },
+  { label: t(locale, 'now'), href: `/${locale}/now` },
+  { label: t(locale, 'guestbook'), href: `/${locale}/guestbook` },
 ];
 
 const currentPath = Astro.url.pathname;
+const homeHref = `/${locale}/`;
 ---
 
 <header class="pt-8 pb-4">
   <div class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
     <nav class="flex items-center justify-between">
       <!-- Logo -->
-      <a href="/" class="text-[var(--color-text)] font-semibold">
+      <a href={homeHref} class="text-[var(--color-text)] font-semibold">
         Pierrick Deniel
       </a>
 
