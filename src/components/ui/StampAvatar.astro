@@ -96,6 +96,8 @@ const uniqueId = `stamp-${size}-${Math.random().toString(36).slice(2, 8)}`;
   .stamp-wrapper {
     display: inline-block;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   .stamp-svg {
@@ -160,6 +162,8 @@ const uniqueId = `stamp-${size}-${Math.random().toString(36).slice(2, 8)}`;
       let currentVariant = 0;
 
       wrapper.addEventListener('click', (e) => {
+        e.preventDefault();
+
         // Shift+click to toggle debug mode
         if (e.shiftKey) {
           debugMode = !debugMode;
