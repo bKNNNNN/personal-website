@@ -7,6 +7,12 @@ const currentYear = new Date().getFullYear();
 <footer class="py-16 mt-16 border-t border-[var(--color-border)]">
   <div class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
     <div class="flex flex-col sm:flex-row justify-between gap-12">
+      <!-- Avatar + Copyright -->
+      <div class="flex flex-col gap-6">
+        <StampAvatar size="lg" />
+        <p class="text-sm text-[var(--color-text-muted)]">© {currentYear} Pierrick Deniel</p>
+      </div>
+
       <!-- Links columns -->
       <div class="flex gap-16">
         <div class="flex flex-col gap-3">
@@ -21,15 +27,7 @@ const currentYear = new Date().getFullYear();
           <a href="https://x.com/bKN____" target="_blank" rel="noopener noreferrer" class="footer-link">X</a>
         </div>
       </div>
-
-      <!-- Avatar -->
-      <div class="flex items-start">
-        <StampAvatar size="lg" />
-      </div>
     </div>
-
-    <!-- Copyright -->
-    <p class="mt-12 text-sm text-[var(--color-text-muted)]">© {currentYear} Pierrick Deniel</p>
   </div>
 </footer>
 
