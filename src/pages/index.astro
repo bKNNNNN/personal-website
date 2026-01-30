@@ -1,0 +1,8 @@
+---
+// Root index - detects locale from domain and rewrites to appropriate content
+const host = Astro.request.headers.get('host') || '';
+const locale = host.includes('pierrickdeniel.fr') ? 'fr' : 'en';
+
+// Rewrite to the locale-specific page (URL stays clean)
+return Astro.rewrite(`/${locale}/`);
+---

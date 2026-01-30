@@ -1,0 +1,5 @@
+---
+const host = Astro.request.headers.get('host') || '';
+const locale = host.includes('pierrickdeniel.fr') ? 'fr' : 'en';
+return Astro.rewrite(`/${locale}/guestbook`);
+---
