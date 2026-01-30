@@ -1,0 +1,134 @@
+---
+interface Props {
+  class?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const { class: className, size = 'md' } = Astro.props;
+
+const sizeClasses = {
+  sm: 'w-10 h-10',
+  md: 'w-16 h-16',
+  lg: 'w-32 h-32',
+  xl: 'w-64 h-64'
+};
+
+// Bordeaux coordinates
+const BORDEAUX_LAT = 44.8378;
+const BORDEAUX_LON = -0.5792;
+
+// Fetch weather data from Open-Meteo (free, no API key)
+let weatherImage = 'sunny.png';
+let weatherDescription = 'Ensoleillé';
+
+try {
+  const response = await fetch(
+    `https://api.open-meteo.com/v1/forecast?latitude=${BORDEAUX_LAT}&longitude=${BORDEAUX_LON}&current=weather_code,is_day,wind_speed_10m`
+  );
+  const data = await response.json();
+
+  const weatherCode = data.current.weather_code;
+  const isDay = data.current.is_day === 1;
+  const windSpeed = data.current.wind_speed_10m;
+
+  // Map weather codes to images
+  // https://open-meteo.com/en/docs#weathervariables
+  const getWeatherImage = (code: number, isDay: boolean, windSpeed: number) => {
+    // Strong wind (> 40 km/h) takes priority
+    if (windSpeed > 40) {
+      return { image: 'wind.png', description: 'Venteux' };
+    }
+
+    // Clear sky
+    if (code === 0) {
+      return isDay
+        ? { image: 'sunny.png', description: 'Ensoleillé' }
+        : { image: 'clear-night.png', description: 'Nuit claire' };
+    }
+
+    // Mainly clear, partly cloudy
+    if (code === 1 || code === 2) {
+      return isDay
+        ? { image: 'sunny.png', description: 'Partiellement nuageux' }
+        : { image: 'clear-night.png', description: 'Nuit claire' };
+    }
+
+    // Overcast
+    if (code === 3) {
+      return isDay
+        ? { image: 'cloudy.png', description: 'Nuageux' }
+        : { image: 'cloudy-night.png', description: 'Nuit nuageuse' };
+    }
+
+    // Fog
+    if (code === 45 || code === 48) {
+      return { image: 'fog.png', description: 'Brouillard' };
+    }
+
+    // Drizzle
+    if (code >= 51 && code <= 57) {
+      return { image: 'rain.png', description: 'Bruine' };
+    }
+
+    // Rain
+    if (code >= 61 && code <= 67) {
+      return { image: 'rain.png', description: 'Pluie' };
+    }
+
+    // Snow
+    if (code >= 71 && code <= 77) {
+      return { image: 'snow.png', description: 'Neige' };
+    }
+
+    // Rain showers
+    if (code >= 80 && code <= 82) {
+      return { image: 'rain.png', description: 'Averses' };
+    }
+
+    // Snow showers
+    if (code === 85 || code === 86) {
+      return { image: 'snow.png', description: 'Averses de neige' };
+    }
+
+    // Thunderstorm
+    if (code >= 95 && code <= 99) {
+      return { image: 'thunderstorm.png', description: 'Orage' };
+    }
+
+    // Default
+    return isDay
+      ? { image: 'cloudy.png', description: 'Nuageux' }
+      : { image: 'cloudy-night.png', description: 'Nuit' };
+  };
+
+  const weather = getWeatherImage(weatherCode, isDay, windSpeed);
+  weatherImage = weather.image;
+  weatherDescription = weather.description;
+} catch (error) {
+  console.error('Failed to fetch weather:', error);
+}
+---
+
+<div
+  class:list={["weather-avatar", sizeClasses[size], className]}
+  title={`Météo à Bordeaux : ${weatherDescription}`}
+>
+  <img
+    src={`/weather-avatars/${weatherImage}`}
+    alt={`Pierrick - ${weatherDescription}`}
+    class="avatar-img"
+  />
+</div>
+
+<style>
+  .weather-avatar {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" id="interactive-wine-svg">
+  <defs>
+    <clipPath id="circle-clip">
+      <circle cx="50" cy="50" r="50" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circle-clip)">
+    <rect width="100" height="100" fill="#f0e6d2" />
+    <image href="/pixel-avatar.png" width="100" height="100" preserveAspectRatio="xMidYMid slice" id="man-base" />
+    <g id="arm-and-glass">
+      <image href="/pixel-avatar.png" width="100" height="100" preserveAspectRatio="xMidYMid slice" clip-path="inset(50% 0 0 0)" id="arm-part" />
+      <g id="glass-container" transform="translate(0, 0)">
+        <image href="/pixel-avatar.png" width="100" height="100" preserveAspectRatio="xMidYMid slice" clip-path="inset(50% 20% 20% 20%)" id="glass-part" />
+        <polygon id="wine-liquid" points="30,75 70,75 70,85 30,85" fill="#7e1e2f" opacity="0.9" />
+      </g>
+    </g>
+  </g>
+</svg>
