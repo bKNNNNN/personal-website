@@ -2,7 +2,6 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
-// Default RSS redirects to English
 export async function GET(context: APIContext) {
   const entries = await getCollection('nowEn', ({ data }) => !data.draft);
   const sortedEntries = entries.sort(
