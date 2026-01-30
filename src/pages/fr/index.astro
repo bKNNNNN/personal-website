@@ -102,8 +102,11 @@ function formatDate(timestamp: number): string {
             {t(locale, 'domainSweepDesc')}
           </p>
         </a>
-        <div class="project-card block">
-          <h3 class="text-base font-medium mb-2">Jean-Claude</h3>
+        <div class="project-card-static block">
+          <div class="flex items-center gap-2 mb-2">
+            <h3 class="text-base font-medium">Jean-Claude</h3>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--color-bg-alt)] text-[var(--color-text-muted)]">Privé</span>
+          </div>
           <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
             {t(locale, 'jeanClaudeDesc')}
           </p>
@@ -206,11 +209,15 @@ function formatDate(timestamp: number): string {
     letter-spacing: 0.02em;
   }
 
-  .project-card {
+  .project-card,
+  .project-card-static {
     padding: 1rem;
     margin: -1rem;
     border-radius: 8px;
     text-decoration: none;
+  }
+
+  .project-card {
     transition: background-color 0.2s ease;
   }
 
@@ -218,7 +225,8 @@ function formatDate(timestamp: number): string {
     background-color: var(--color-bg-alt);
   }
 
-  .project-card h3 {
+  .project-card h3,
+  .project-card-static h3 {
     color: var(--color-text);
   }
 </style>
