@@ -44,12 +44,12 @@ function formatDate(timestamp: number): string {
 }
 ---
 
-<BaseLayout title="Pierrick Deniel | Consultant SEO & Spécialiste Automatisation IA" description="Consultant SEO et spécialiste de l'automatisation IA. J'aide les entreprises à optimiser leur présence en ligne. Aussi la maison de Jean-Claude, une IA qui a des opinions." locale={locale}>
+<BaseLayout title="Pierrick Deniel | Product Engineer & Consultant" description="Product Engineer qui aide les startups à livrer des produits et construire des outils IA. Aussi la maison de Jean-Claude, une IA qui a des opinions." locale={locale}>
   <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
     <!-- Hero - Jean-Claude's intro -->
     <section class="py-16">
       <p class="text-[var(--color-text-muted)] leading-relaxed">
-        {t(locale, 'heroIntro')}
+        <a href={`/${locale}/`} class="text-[var(--color-text)] text-[length:var(--step-2)] font-semibold hover:opacity-70 transition-opacity"><h1 class="inline">Product Engineer</h1></a>{t(locale, 'heroIntro')}
       </p>
     </section>
 

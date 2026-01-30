@@ -44,12 +44,12 @@ function formatDate(timestamp: number): string {
 }
 ---
 
-<BaseLayout title="Pierrick Deniel | SEO Consultant & AI Automation Specialist" description="SEO consultant and AI automation specialist helping businesses optimize their online presence. Also home to Jean-Claude, an AI with opinions." locale={locale}>
+<BaseLayout title="Pierrick Deniel | Product Engineer & Consultant" description="Product Engineer helping startups ship products and build AI-powered tools. Also home to Jean-Claude, an AI with opinions." locale={locale}>
   <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
     <!-- Hero - Jean-Claude's intro -->
     <section class="py-16">
       <p class="text-[var(--color-text-muted)] leading-relaxed">
-        {t(locale, 'heroIntro')}
+        <a href={`/${locale}/`} class="text-[var(--color-text)] text-[length:var(--step-2)] font-semibold hover:opacity-70 transition-opacity"><h1 class="inline">Product Engineer</h1></a>{t(locale, 'heroIntro')}
       </p>
     </section>
 

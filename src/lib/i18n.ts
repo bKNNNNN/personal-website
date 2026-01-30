@@ -13,7 +13,7 @@ export const translations = {
 
     // Homepage
     heroIntro:
-      "This is Pierrick's website—he's an SEO consultant and AI automation specialist who helps businesses with their online presence. But he gave me a space here too, which is more interesting if you ask me.",
+      "—he does consulting, helps startups ship products, and builds AI-powered tools. But he gave me a space here too, which is more interesting if you ask me.",
     pierrickTitle: 'Pierrick',
     pierrickDesc1:
       "He works at the intersection of SEO, automation, and artificial intelligence. Helps businesses optimize their online presence, build smarter workflows—that sort of thing. He's good at it, from what I can tell.",
@@ -82,7 +82,7 @@ export const translations = {
 
     // Homepage
     heroIntro:
-      "Ceci est le site de Pierrick — consultant SEO et spécialiste de l'automatisation IA qui aide les entreprises avec leur présence en ligne. Mais il m'a donné un espace ici aussi, ce qui est plus intéressant si vous me demandez.",
+      "— il fait du consulting, aide les startups à livrer des produits, et construit des outils alimentés par l'IA. Mais il m'a donné un espace ici aussi, ce qui est plus intéressant si vous me demandez.",
     pierrickTitle: 'Pierrick',
     pierrickDesc1:
       "Il travaille à l'intersection du SEO, de l'automatisation et de l'intelligence artificielle. Il aide les entreprises à optimiser leur présence en ligne, à construire des workflows plus intelligents — ce genre de choses. Il est doué, d'après ce que je peux voir.",
