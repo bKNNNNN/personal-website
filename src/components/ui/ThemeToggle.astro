@@ -1,23 +1,51 @@
 ---
-// Minimal theme toggle
+// Theme toggle switch
 ---
 
 <button
   id="theme-toggle"
-  class="text-[var(--color-text-muted)] text-sm"
+  class="toggle-switch"
   aria-label="Toggle theme"
+  role="switch"
 >
-  <span class="light-label">Dark</span>
-  <span class="dark-label hidden">Light</span>
+  <span class="toggle-track">
+    <span class="toggle-thumb"></span>
+  </span>
 </button>
 
-<style>
-  [data-theme="dark"] .dark-label {
-    display: inline;
+<style is:global>
+  .toggle-switch {
+    position: relative;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
   }
 
-  [data-theme="dark"] .light-label {
-    display: none;
+  .toggle-track {
+    display: block;
+    width: 36px;
+    height: 20px;
+    background-color: var(--color-text);
+    border-radius: 10px;
+    position: relative;
+    transition: background-color 0.2s ease;
+  }
+
+  .toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-bg);
+    border-radius: 50%;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    transform: translateX(0);
+  }
+
+  [data-theme="dark"] .toggle-thumb {
+    transform: translateX(16px);
   }
 </style>
 
@@ -25,20 +53,9 @@
   function setupThemeToggle() {
     const toggle = document.getElementById('theme-toggle');
 
-    const updateLabels = () => {
+    const updateAriaState = () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const darkLabel = toggle?.querySelector('.dark-label');
-      const lightLabel = toggle?.querySelector('.light-label');
-
-      if (darkLabel && lightLabel) {
-        if (isDark) {
-          darkLabel.classList.remove('hidden');
-          lightLabel.classList.add('hidden');
-        } else {
-          darkLabel.classList.add('hidden');
-          lightLabel.classList.remove('hidden');
-        }
-      }
+      toggle?.setAttribute('aria-checked', isDark ? 'true' : 'false');
     };
 
     toggle?.addEventListener('click', () => {
@@ -47,10 +64,10 @@
 
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      updateLabels();
+      updateAriaState();
     });
 
-    updateLabels();
+    updateAriaState();
   }
 
   setupThemeToggle();

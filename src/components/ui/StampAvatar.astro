@@ -1,0 +1,200 @@
+---
+interface Props {
+  class?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const { class: className, size = 'md' } = Astro.props;
+
+const sizes = {
+  sm: 48,
+  md: 64,
+  lg: 112,
+  xl: 176
+};
+
+const s = sizes[size];
+const border = s * 0.0625;
+const hole = s * 0.042;
+const spacing = s * 0.125;
+const h = s * 1.18;
+
+// Generate stamp perforated path
+function generateStampPath(w: number, h: number, r: number, gap: number): string {
+  let path = '';
+
+  // Top edge (left to right) - arc curves upward (outward)
+  path += `M 0 0`;
+  for (let x = gap; x < w; x += gap) {
+    path += ` L ${x - r} 0 A ${r} ${r} 0 0 0 ${x + r} 0`;
+  }
+  path += ` L ${w} 0`;
+
+  // Right edge (top to bottom) - arc curves rightward (outward)
+  for (let y = gap; y < h; y += gap) {
+    path += ` L ${w} ${y - r} A ${r} ${r} 0 0 0 ${w} ${y + r}`;
+  }
+  path += ` L ${w} ${h}`;
+
+  // Bottom edge (right to left) - arc curves downward (outward)
+  for (let x = w - gap; x > 0; x -= gap) {
+    path += ` L ${x + r} ${h} A ${r} ${r} 0 0 0 ${x - r} ${h}`;
+  }
+  path += ` L 0 ${h}`;
+
+  // Left edge (bottom to top) - arc curves leftward (outward)
+  for (let y = h - gap; y > 0; y -= gap) {
+    path += ` L 0 ${y + r} A ${r} ${r} 0 0 0 0 ${y - r}`;
+  }
+  path += ' Z';
+
+  return path;
+}
+
+const stampPath = generateStampPath(s, h, hole, spacing);
+
+// Default weather (will be updated client-side)
+const weatherType = 'sunny';
+const weatherImage = `${weatherType}.png`;
+
+const uniqueId = `stamp-${size}-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class:list={["stamp-wrapper", className]} style={`width: ${s}px; height: ${h}px;`} data-weather={weatherType}>
+  <svg viewBox={`0 0 ${s} ${h}`} class="stamp-svg" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <clipPath id={uniqueId}>
+        <path d={stampPath} />
+      </clipPath>
+    </defs>
+
+    <!-- Stamp background with perforations -->
+    <path d={stampPath} class="stamp-border" />
+
+    <!-- Inner dark area -->
+    <rect
+      x={border}
+      y={border}
+      width={s - border * 2}
+      height={h - border * 2}
+      fill="#1a1a1a"
+    />
+
+    <!-- Weather image -->
+    <image
+      href={`/weather-avatars/${weatherImage}`}
+      x={border + 2}
+      y={border + 2}
+      width={s - border * 2 - 4}
+      height={h - border * 2 - 4}
+      preserveAspectRatio="xMidYMid slice"
+    />
+  </svg>
+</div>
+
+<style>
+  .stamp-wrapper {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .stamp-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(1px 2px 4px rgba(0,0,0,0.5));
+  }
+
+  .stamp-border {
+    fill: var(--color-text-muted);
+    transition: fill 0.3s ease;
+  }
+
+  .stamp-wrapper:hover .stamp-border {
+    fill: var(--color-text);
+  }
+</style>
+
+<script>
+  const variants = ['', '-2', '-3', '-4', '-5'];
+  const BORDEAUX_LAT = 44.8378;
+  const BORDEAUX_LON = -0.5792;
+
+  async function getWeatherType() {
+    try {
+      // Using Météo-France models (AROME + ARPEGE seamless)
+      const res = await fetch(`https://api.open-meteo.com/v1/meteofrance?latitude=${BORDEAUX_LAT}&longitude=${BORDEAUX_LON}&current=weather_code,is_day,wind_speed_10m,precipitation`);
+      const data = await res.json();
+      const code = data.current.weather_code;
+      const isDay = data.current.is_day === 1;
+      const wind = data.current.wind_speed_10m;
+
+      if (wind > 40) return 'wind';
+      if (code === 0) return isDay ? 'sunny' : 'clear-night';
+      if (code >= 1 && code <= 3) return isDay ? 'cloudy' : 'cloudy-night';
+      if (code === 45 || code === 48) return 'fog';
+      if (code >= 51 && code <= 67) return 'rain';
+      if (code >= 71 && code <= 77) return 'snow';
+      if (code >= 80 && code <= 86) return 'rain';
+      if (code >= 95) return 'thunderstorm';
+      return isDay ? 'cloudy' : 'cloudy-night';
+    } catch {
+      return 'sunny';
+    }
+  }
+
+  const allWeatherTypes = ['sunny', 'cloudy', 'rain', 'thunderstorm', 'wind', 'fog', 'snow', 'clear-night', 'cloudy-night'];
+  let debugMode = false;
+  let debugIndex = 0;
+
+  async function initStamps() {
+    let weatherType = await getWeatherType();
+
+    document.querySelectorAll('.stamp-wrapper').forEach(wrapper => {
+      const image = wrapper.querySelector('image');
+      if (!image) return;
+
+      // Set weather type and initial image
+      wrapper.dataset.weather = weatherType;
+      image.setAttribute('href', `/weather-avatars/${weatherType}.png`);
+
+      let currentVariant = 0;
+
+      wrapper.addEventListener('click', (e) => {
+        // Shift+click to toggle debug mode
+        if (e.shiftKey) {
+          debugMode = !debugMode;
+          if (debugMode) {
+            console.log('🔧 Debug mode ON - Click to cycle through weather types');
+          } else {
+            console.log('🔧 Debug mode OFF - Back to real weather');
+            wrapper.dataset.weather = weatherType;
+            image.setAttribute('href', `/weather-avatars/${weatherType}.png`);
+          }
+          return;
+        }
+
+        if (debugMode) {
+          // Cycle through all weather types
+          debugIndex = (debugIndex + 1) % allWeatherTypes.length;
+          const testWeather = allWeatherTypes[debugIndex];
+          wrapper.dataset.weather = testWeather;
+          image.setAttribute('href', `/weather-avatars/${testWeather}.png`);
+          console.log(`🌤️ Testing: ${testWeather} (${debugIndex + 1}/${allWeatherTypes.length})`);
+        } else {
+          // Normal mode: random variant
+          let newVariant;
+          do {
+            newVariant = Math.floor(Math.random() * variants.length);
+          } while (newVariant === currentVariant && variants.length > 1);
+
+          currentVariant = newVariant;
+          const currentWeather = wrapper.dataset.weather;
+          const suffix = variants[currentVariant];
+          image.setAttribute('href', `/weather-avatars/${currentWeather}${suffix}.png`);
+        }
+      });
+    });
+  }
+
+  initStamps();
+</script>

@@ -1,32 +1,14 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// Blog collection
-const blog = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/blog' }),
+// Now collection - Jean-Claude's reflections (no titles, just dates)
+const now = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/now' }),
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
     date: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    tags: z.array(z.string()).optional().default([]),
     draft: z.boolean().default(false),
-    image: z.string().optional(),
+    audio: z.string().optional(),
   }),
 });
 
-// Projects collection
-const projects = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    year: z.number(),
-    category: z.string(),
-    url: z.string().optional(),
-    image: z.string().optional(),
-    featured: z.boolean().default(false),
-  }),
-});
-
-export const collections = { blog, projects };
+export const collections = { now };

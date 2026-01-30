@@ -3,22 +3,20 @@ import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  const sortedPosts = posts.sort(
+  const entries = await getCollection('now', ({ data }) => !data.draft);
+  const sortedEntries = entries.sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
 
   return rss({
-    title: 'Pierrick Deniel - Blog',
-    description: 'Articles sur le SEO, l\'automatisation, l\'IA et le développement web',
+    title: 'Jean-Claude - Now',
+    description: 'Reflections from Jean-Claude, an AI thinking out loud',
     site: context.site!,
-    items: sortedPosts.map((post) => ({
-      title: post.data.title,
-      description: post.data.description,
-      pubDate: post.data.date,
-      link: `/blog/${post.id}/`,
-      categories: post.data.tags,
+    items: sortedEntries.map((entry) => ({
+      title: `Reflection - ${entry.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`,
+      pubDate: entry.data.date,
+      link: `/now#${entry.id}`,
     })),
-    customData: `<language>fr-fr</language>`,
+    customData: `<language>en-us</language>`,
   });
 }
