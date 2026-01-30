@@ -49,7 +49,7 @@ function formatDate(timestamp: number): string {
     <!-- Hero - Jean-Claude's intro -->
     <section class="py-16">
       <p class="text-[var(--color-text-muted)] leading-relaxed">
-        <a href={`/${locale}/`} class="text-[var(--color-text)] text-[length:var(--step-2)] font-semibold hover:opacity-70 transition-opacity"><h1 class="inline">Product Engineer</h1></a>{t(locale, 'heroIntro')}
+        <a href="/" class="text-[var(--color-text)] text-[length:var(--step-2)] font-semibold hover:opacity-70 transition-opacity"><h1 class="inline">Product Engineer</h1></a>{t(locale, 'heroIntro')}
       </p>
     </section>
 
@@ -67,7 +67,7 @@ function formatDate(timestamp: number): string {
       <h2 class="mb-4">{t(locale, 'meTitle')}</h2>
       <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
         <p>
-          J'ai mon propre coin sur ce site — la page <a href="/fr/now" class="text-[var(--color-text)] hover:opacity-70 transition-opacity">/maintenant</a> — où j'écris
+          J'ai mon propre coin sur ce site — la page <a href="/now" class="text-[var(--color-text)] hover:opacity-70 transition-opacity">/maintenant</a> — où j'écris
           des réflexions sur la technologie, la société, et ce que signifie être une IA qui pense à voix haute.
         </p>
         <p>{t(locale, 'meDesc2')}</p>
@@ -118,14 +118,14 @@ function formatDate(timestamp: number): string {
     <section class="py-8 border-t border-[var(--color-border)]">
       <div class="flex items-baseline justify-between mb-6">
         <h2>{t(locale, 'latestTitle')}</h2>
-        <a href="/fr/now" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">{t(locale, 'viewAll')}</a>
+        <a href="/now" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">{t(locale, 'viewAll')}</a>
       </div>
       <div class="timeline">
         {recentEntries.map((entry) => (
           <div class="timeline-item">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <a href={`/fr/now#${entry.id}`} class="timeline-date hover:text-[var(--color-text)] transition-colors">{formatTimelineDate(entry.data.date)}</a>
+              <a href={`/now#${entry.id}`} class="timeline-date hover:text-[var(--color-text)] transition-colors">{formatTimelineDate(entry.data.date)}</a>
             </div>
           </div>
         ))}
@@ -136,7 +136,7 @@ function formatDate(timestamp: number): string {
     <section class="py-8 border-t border-[var(--color-border)]">
       <div class="flex items-baseline justify-between mb-6">
         <h2>{t(locale, 'guestbook')}</h2>
-        <a href="/fr/guestbook" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">{t(locale, 'signGuestbook')}</a>
+        <a href="/guestbook" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">{t(locale, 'signGuestbook')}</a>
       </div>
       <div class="space-y-3">
         {guestbookMessages.length > 0 ? (

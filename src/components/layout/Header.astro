@@ -9,12 +9,12 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 
 const navItems = [
-  { label: t(locale, 'now'), href: `/${locale}/now` },
-  { label: t(locale, 'guestbook'), href: `/${locale}/guestbook` },
+  { label: t(locale, 'now'), href: '/now' },
+  { label: t(locale, 'guestbook'), href: '/guestbook' },
 ];
 
 const currentPath = Astro.url.pathname;
-const homeHref = `/${locale}/`;
+const homeHref = '/';
 ---
 
 <header class="pt-8 pb-4">

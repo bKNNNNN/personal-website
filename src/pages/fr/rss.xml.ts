@@ -15,7 +15,7 @@ export async function GET(context: APIContext) {
     items: sortedEntries.map((entry) => ({
       title: `Réflexion - ${entry.data.date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`,
       pubDate: entry.data.date,
-      link: `/fr/now#${entry.id}`,
+      link: `/now#${entry.id}`,
     })),
     customData: `<language>fr</language>`,
   });
