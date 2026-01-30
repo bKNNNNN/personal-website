@@ -3,8 +3,7 @@
 ---
 
 <button
-  id="theme-toggle"
-  class="toggle-switch"
+  class="toggle-switch theme-toggle"
   aria-label="Toggle theme"
   role="switch"
 >
@@ -53,20 +52,22 @@
 
 <script>
   function setupThemeToggle() {
-    const toggle = document.getElementById('theme-toggle');
+    const toggles = document.querySelectorAll('.theme-toggle');
 
     const updateAriaState = () => {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      toggle?.setAttribute('aria-checked', isDark ? 'true' : 'false');
+      toggles.forEach(toggle => toggle.setAttribute('aria-checked', isDark ? 'true' : 'false'));
     };
 
-    toggle?.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateAriaState();
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateAriaState();
+      });
     });
 
     updateAriaState();
