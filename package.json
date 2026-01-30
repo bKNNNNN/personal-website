@@ -15,8 +15,6 @@
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/vercel": "^9.0.4",
-    "@fontsource-variable/cormorant": "^5.2.8",
-    "@fontsource-variable/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.13",
