@@ -12,16 +12,21 @@ interface Props {
 }
 
 const { title, description = "Personal website of Pierrick Deniel", image, locale = 'en' } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Get clean path without locale prefix (for URLs shown to users)
+const cleanPath = Astro.url.pathname.replace(/^\/(en|fr)/, '') || '/';
+
+// Determine the correct domain based on locale
+const domain = locale === 'fr' ? 'https://pierrickdeniel.fr' : 'https://pierrickdeniel.com';
+const canonicalURL = new URL(cleanPath, domain);
 
 // Don't add suffix if it's already the brand name (homepage)
 const isHomepage = title === 'Pierrick Deniel' || title.includes('Pierrick Deniel');
 const fullTitle = isHomepage ? title : `${title} — Pierrick Deniel`;
 
 // Generate alternate URLs for hreflang
-const currentPath = Astro.url.pathname.replace(/^\/(en|fr)/, '');
-const enUrl = `https://pierrickdeniel.com${currentPath || '/'}`;
-const frUrl = `https://pierrickdeniel.fr${currentPath || '/'}`;
+const enUrl = `https://pierrickdeniel.com${cleanPath}`;
+const frUrl = `https://pierrickdeniel.fr${cleanPath}`;
 ---
 
 <!doctype html>
