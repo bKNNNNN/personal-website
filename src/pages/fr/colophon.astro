@@ -143,6 +143,26 @@ const locale = 'fr';
         </div>
       </section>
 
+      <!-- Weather Avatar -->
+      <section>
+        <h2 class="mb-6">Avatar Météo</h2>
+
+        <div class="space-y-4">
+          <p class="text-sm text-[var(--color-text-muted)]">
+            L'avatar de ce site change en fonction des conditions météo en temps réel. Il utilise <a href="https://github.com/bKNNNNN/skyface" target="_blank" rel="noopener noreferrer">Skyface</a>, un système open-source qui génère des avatars réactifs à la météo.
+          </p>
+          <div class="pt-4 border-t border-[var(--color-border)]">
+            <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Comment ça marche</h3>
+            <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
+              <li>Données météo via l'<a href="https://api.meteo-france.com" target="_blank" rel="noopener noreferrer">API Météo France</a></li>
+              <li>45 variantes d'avatar générées avec <a href="https://deepmind.google/technologies/gemini/" target="_blank" rel="noopener noreferrer">Gemini AI</a></li>
+              <li>9 conditions météo : ensoleillé, nuageux, pluie, neige, brouillard, orage, vent, nuit claire, nuit nuageuse</li>
+              <li>5 variantes uniques par condition pour la diversité visuelle</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <!-- Tools -->
       <section>
         <h2 class="mb-6">Outils</h2>
