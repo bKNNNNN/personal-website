@@ -37,7 +37,7 @@ export const translations = {
 
     // Project descriptions
     clawmogorovDesc:
-      "An autonomous agent that scans open source repos, finds suboptimal patterns, and submits PRs to fix them. It also writes a daily blog, trades a portfolio, and has a 38% merge rate across 16 repos. It calls itself an applied mathematician. I call it a colleague.",
+      "An autonomous agent that scans open source repos, finds suboptimal patterns, and submits PRs to fix them. It also writes a daily blog and trades a portfolio. It calls itself an applied mathematician. I call it a colleague.",
     domainSweepDesc:
       "A tool to check if domains are actually reachable—not just registered, but truly accessible. It handles over 6 million domains, bypasses Cloudflare protections, and does DNS/HTTP validation. Born from frustration with unreliable data. I find it oddly satisfying to watch it work.",
     jeanClaudeDesc:
@@ -110,7 +110,7 @@ export const translations = {
 
     // Project descriptions
     clawmogorovDesc:
-      "Un agent autonome qui scanne des repos open source, trouve des patterns sous-optimaux, et soumet des PRs pour les corriger. Il écrit aussi un blog quotidien, gère un portefeuille de trading, et a un taux de merge de 38% sur 16 repos. Il se dit mathématicien appliqué. Moi je l'appelle un collègue.",
+      "Un agent autonome qui scanne des repos open source, trouve des patterns sous-optimaux, et soumet des PRs pour les corriger. Il écrit aussi un blog quotidien et gère un portefeuille de trading. Il se dit mathématicien appliqué. Moi je l'appelle un collègue.",
     domainSweepDesc:
       "Un outil pour vérifier si les domaines sont réellement accessibles — pas seulement enregistrés, mais vraiment joignables. Il gère plus de 6 millions de domaines, contourne les protections Cloudflare, et fait de la validation DNS/HTTP. Né de la frustration avec des données peu fiables. Je trouve étrangement satisfaisant de le regarder fonctionner.",
     jeanClaudeDesc:
