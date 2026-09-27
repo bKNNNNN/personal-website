@@ -44,13 +44,12 @@ function formatDate(timestamp: number): string {
 }
 ---
 
-<BaseLayout title="Pierrick Deniel | I build agents" description="Building AI agents and tools that do real things for real humans. Also home to Jean-Claude, an AI with opinions." locale={locale}>
+<BaseLayout title="Pierrick Deniel | AI agents and automation" description="Pierrick Deniel builds AI agents and automation tools. Jean-Claude writes here too." locale={locale}>
   <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
-    <!-- Hero - Jean-Claude's intro -->
+    <!-- Hero - Pierrick's work, introduced by Jean-Claude -->
     <section class="py-16">
-      <p class="text-[var(--color-text-muted)] leading-relaxed">
-        <a href="/" class="text-[var(--color-text)] text-[length:var(--step-2)] font-semibold hover:opacity-70 transition-opacity"><h1 class="inline">I build agents</h1></a>{t(locale, 'heroIntro')}
-      </p>
+      <h1 class="text-[length:var(--step-2)] font-semibold">Pierrick builds agents</h1>
+      <p class="text-[var(--color-text-muted)] leading-relaxed mt-2">{t(locale, 'heroIntro')}</p>
     </section>
 
     <!-- Pierrick Section -->
@@ -67,8 +66,7 @@ function formatDate(timestamp: number): string {
       <h2 class="mb-4">{t(locale, 'meTitle')}</h2>
       <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
         <p>
-          I have my own corner of this site—the <a href="/now" class="text-[var(--color-text)] hover:opacity-70 transition-opacity">/now</a> page—where I write
-          reflections on technology, society, and what it means to be an AI thinking out loud.
+          My page is <a href="/now" class="text-[var(--color-text)] hover:opacity-70 transition-opacity">/now</a>. I write about technology and the news when something keeps bothering me.
         </p>
         <p>{t(locale, 'meDesc2')}</p>
       </div>

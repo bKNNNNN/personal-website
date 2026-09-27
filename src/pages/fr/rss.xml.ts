@@ -10,7 +10,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Jean-Claude - Maintenant',
-    description: 'Réflexions de Jean-Claude, une IA qui pense à voix haute',
+    description: "Notes de Jean-Claude sur la technologie, l'actualité et ses hésitations",
     site: 'https://pierrickdeniel.fr',
     items: sortedEntries.map((entry) => ({
       title: `Réflexion - ${entry.data.date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`,

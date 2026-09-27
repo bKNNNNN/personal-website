@@ -31,7 +31,7 @@ const locale = 'fr';
             <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-2">Corps</h3>
             <p class="text-2xl font-medium mb-2">Satoshi</p>
             <p class="text-sm text-[var(--color-text-muted)]">
-              Une sans-serif moderniste de Indian Type Foundry. Elle trouve un équilibre entre précision géométrique et chaleur, avec un 'a' et un 'g' à deux étages qui ajoutent du caractère sans sacrifier la lisibilité.
+              Satoshi est une sans-serif de Indian Type Foundry. Ses formes géométriques restent faciles à lire, même dans les petits textes.
             </p>
           </div>
 
@@ -39,14 +39,14 @@ const locale = 'fr';
             <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-2">Code</h3>
             <p class="text-2xl font-mono mb-2">JetBrains Mono</p>
             <p class="text-sm text-[var(--color-text-muted)]">
-              Une police monospace conçue pour les développeurs, avec des ligatures de programmation et une excellente lisibilité aux petites tailles.
+              Une monospace avec des ligatures pour le code. Elle sert ici à distinguer les caractères sans ralentir la lecture.
             </p>
           </div>
 
           <div class="pt-4 border-t border-[var(--color-border)]">
             <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Échelle fluide</h3>
             <p class="text-sm text-[var(--color-text-muted)] mb-3">
-              La typographie est mise à l'échelle avec un système de type fluide de <a href="https://utopia.fyi" target="_blank" rel="noopener noreferrer">Utopia</a>. Les tailles de police s'interpolent en douceur entre les viewports mobile et desktop.
+              Les tailles de texte suivent l'échelle fluide d'<a href="https://utopia.fyi" target="_blank" rel="noopener noreferrer">Utopia</a>. Elles évoluent avec la largeur de l'écran, sans saut entre mobile et ordinateur.
             </p>
             <ul class="text-sm text-[var(--color-text-muted)] space-y-1">
               <li>Viewport min : <code>320px</code> @ 16px base, ratio 1.2</li>
@@ -76,10 +76,10 @@ const locale = 'fr';
           <div>
             <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Principes</h3>
             <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
-              <li>Minimaliste et centré sur le contenu</li>
-              <li>Palette noir et blanc, sans couleurs d'accent</li>
-              <li>Support des modes clair et sombre</li>
-              <li>Liens soulignés, avec lueur subtile au survol en mode sombre</li>
+              <li>Du texte d'abord, peu d'ornements</li>
+              <li>Noir et blanc, sans couleur d'accent</li>
+              <li>Modes clair et sombre</li>
+              <li>Liens soulignés, légère lueur au survol en mode sombre</li>
             </ul>
           </div>
 
@@ -145,19 +145,19 @@ const locale = 'fr';
 
       <!-- Weather Avatar -->
       <section>
-        <h2 class="mb-6">Avatar Météo</h2>
+        <h2 class="mb-6">Avatar météo</h2>
 
         <div class="space-y-4">
           <p class="text-sm text-[var(--color-text-muted)]">
-            L'avatar de ce site change en fonction des conditions météo en temps réel. Il utilise <a href="https://github.com/bKNNNNN/skyface" target="_blank" rel="noopener noreferrer">Skyface</a>, un système open-source qui génère des avatars réactifs à la météo.
+            L'avatar suit la météo du moment. Il utilise <a href="https://github.com/bKNNNNN/skyface" target="_blank" rel="noopener noreferrer">Skyface</a>, le projet qui génère et affiche ses variantes.
           </p>
           <div class="pt-4 border-t border-[var(--color-border)]">
             <h3 class="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-3">Comment ça marche</h3>
             <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
               <li>Données météo via l'<a href="https://api.meteo-france.com" target="_blank" rel="noopener noreferrer">API Météo France</a></li>
-              <li>45 variantes d'avatar générées avec <a href="https://deepmind.google/technologies/gemini/" target="_blank" rel="noopener noreferrer">Gemini AI</a></li>
+              <li>Jusqu'à 45 variantes générées avec <a href="https://deepmind.google/technologies/gemini/" target="_blank" rel="noopener noreferrer">Gemini</a></li>
               <li>9 conditions météo : ensoleillé, nuageux, pluie, neige, brouillard, orage, vent, nuit claire, nuit nuageuse</li>
-              <li>5 variantes uniques par condition pour la diversité visuelle</li>
+              <li>Jusqu'à 5 variantes par condition</li>
             </ul>
           </div>
         </div>
@@ -176,7 +176,7 @@ const locale = 'fr';
 
       <!-- Accessibility & Performance -->
       <section>
-        <h2 class="mb-6">Accessibilité & Performance</h2>
+        <h2 class="mb-6">Accessibilité et performance</h2>
 
         <ul class="text-sm text-[var(--color-text-muted)] space-y-2">
           <li>Respecte <code>prefers-reduced-motion</code></li>
