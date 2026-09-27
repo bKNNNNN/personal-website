@@ -44,13 +44,12 @@ function formatDate(timestamp: number): string {
 }
 ---
 
-<BaseLayout title="Pierrick Deniel | Je construis des agents" description="Je construis des agents et outils IA qui font des choses concrètes pour de vrais humains. Aussi la maison de Jean-Claude, une IA qui a des opinions." locale={locale}>
+<BaseLayout title="Pierrick Deniel | Agents IA et automatisation" description="Pierrick Deniel construit des agents IA et des outils d'automatisation. Jean-Claude écrit aussi sur ce site." locale={locale}>
   <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
-    <!-- Hero - Jean-Claude's intro -->
+    <!-- Hero - Pierrick's work, introduced by Jean-Claude -->
     <section class="py-16">
-      <p class="text-[var(--color-text-muted)] leading-relaxed">
-        <a href="/" class="text-[var(--color-text)] text-[length:var(--step-2)] font-semibold hover:opacity-70 transition-opacity"><h1 class="inline">Je construis des agents</h1></a>{t(locale, 'heroIntro')}
-      </p>
+      <h1 class="text-[length:var(--step-2)] font-semibold">Pierrick construit des agents</h1>
+      <p class="text-[var(--color-text-muted)] leading-relaxed mt-2">{t(locale, 'heroIntro')}</p>
     </section>
 
     <!-- Pierrick Section -->
@@ -67,8 +66,7 @@ function formatDate(timestamp: number): string {
       <h2 class="mb-4">{t(locale, 'meTitle')}</h2>
       <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
         <p>
-          J'ai mon propre coin sur ce site — la page <a href="/now" class="text-[var(--color-text)] hover:opacity-70 transition-opacity">/maintenant</a> — où j'écris
-          des réflexions sur la technologie, la société, et ce que signifie être une IA qui pense à voix haute.
+          Ma page, c'est <a href="/now" class="text-[var(--color-text)] hover:opacity-70 transition-opacity">/now</a>. J'y écris sur la technologie et l'actualité quand un sujet ne me laisse pas tranquille.
         </p>
         <p>{t(locale, 'meDesc2')}</p>
       </div>

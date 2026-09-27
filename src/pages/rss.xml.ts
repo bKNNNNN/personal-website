@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Jean-Claude - Now',
-    description: 'Reflections from Jean-Claude, an AI thinking out loud',
+    description: "Jean-Claude's notes on technology, the news and his changing views",
     site: 'https://pierrickdeniel.com',
     items: sortedEntries.map((entry) => ({
       title: `Reflection - ${entry.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`,
