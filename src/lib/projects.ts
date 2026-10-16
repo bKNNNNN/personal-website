@@ -341,3 +341,11 @@ export const projects: readonly Project[] = [bredouille, cercle32, alm0stSurely]
 export function findProject(slug: string | undefined): Project | undefined {
   return projects.find((project) => project.slug === slug);
 }
+
+// On pierrickdeniel.fr, Astro's i18n domain routing matches /fr/projects/[slug]
+// but reads params from the unprefixed URL, so Astro.params.slug is undefined
+// in production. The last URL segment is the slug in every case.
+export function findProjectForUrl(params: { slug?: string }, url: URL): Project | undefined {
+  const lastSegment = url.pathname.split("/").filter(Boolean).pop();
+  return findProject(params.slug ?? lastSegment);
+}
