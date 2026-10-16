@@ -1,0 +1,11 @@
+---
+import ProjectCase from '@components/ui/ProjectCase.astro';
+import { findProject } from '@/lib/projects';
+
+const project = findProject(Astro.params.slug);
+if (!project) {
+  return new Response(null, { status: 404 });
+}
+---
+
+<ProjectCase project={project} locale="en" />

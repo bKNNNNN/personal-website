@@ -25,6 +25,11 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      // Case studies are server-rendered routes, so the integration does not see them.
+      customPages: ['bredouille', 'cercle-32'].flatMap((slug) => [
+        `https://pierrickdeniel.com/projects/${slug}`,
+        `https://pierrickdeniel.fr/projects/${slug}`,
+      ]),
       i18n: {
         defaultLocale: 'en',
         locales: {

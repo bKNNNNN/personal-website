@@ -4,6 +4,7 @@ import { ConvexHttpClient } from 'convex/browser';
 import { anyApi } from 'convex/server';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { t } from '@/lib/i18n';
+import { projects } from '@/lib/projects';
 
 const locale = 'en';
 const api = anyApi;
@@ -82,18 +83,25 @@ function formatDate(timestamp: number): string {
     </section>
 
     <!-- Projects Section -->
-    <section class="py-8 border-t border-[var(--color-border)]">
+    <section id="projects" class="py-8 border-t border-[var(--color-border)]">
       <div class="flex items-baseline justify-between mb-6">
         <h2>{t(locale, 'projectsTitle')}</h2>
         <a href="https://github.com/bKNNNNN" target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">GitHub →</a>
       </div>
+      <div class="space-y-6 mb-12">
+        {projects.map((project) => (
+          <a href={`/projects/${project.slug}`} class="project-card block">
+            <div class="flex items-center gap-2 mb-2">
+              <h3 class="text-base font-medium">{project.copy[locale].title}</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--color-bg-alt)] text-[var(--color-text-muted)]">{project.copy[locale].badge}</span>
+            </div>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">{project.copy[locale].homeBlurb}</p>
+            <span class="read-case text-sm">{t(locale, 'readCase')}</span>
+          </a>
+        ))}
+      </div>
+      <h3 class="earlier-title text-sm font-medium text-[var(--color-text-muted)]">{t(locale, 'earlierProjects')}</h3>
       <div class="space-y-6">
-        <a href="https://alm0stsurely.github.io/" target="_blank" rel="noopener noreferrer" class="project-card block">
-          <h3 class="text-base font-medium mb-2">Alm0stSurely</h3>
-          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
-            {t(locale, 'clawmogorovDesc')}
-          </p>
-        </a>
         <a href="https://github.com/bKNNNNN/skyface" target="_blank" rel="noopener noreferrer" class="project-card block">
           <h3 class="text-base font-medium mb-2">Skyface</h3>
           <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
@@ -232,5 +240,19 @@ function formatDate(timestamp: number): string {
   .project-card h3,
   .project-card-static h3 {
     color: var(--color-text);
+  }
+
+  .read-case {
+    display: inline-block;
+    margin-top: 0.75rem;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .earlier-title {
+    margin-bottom: var(--space-m);
+    letter-spacing: 0;
   }
 </style>
