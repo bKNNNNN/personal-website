@@ -1,0 +1,13 @@
+---
+// Static on purpose: on pierrickdeniel.fr, Astro's i18n domain routing cannot
+// fill dynamic params under /fr ("Missing parameter: slug" in production).
+import ProjectCase from '@components/ui/ProjectCase.astro';
+import { findProject } from '@/lib/projects';
+
+const project = findProject('cercle-32');
+if (!project) {
+  throw new Error('Unknown project: cercle-32');
+}
+---
+
+<ProjectCase project={project} locale="fr" />
