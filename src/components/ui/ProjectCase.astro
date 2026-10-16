@@ -1,0 +1,194 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { t, type Locale } from '@/lib/i18n';
+import { projects, type Project } from '@/lib/projects';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const copy = project.copy[locale];
+const next = projects[(projects.indexOf(project) + 1) % projects.length];
+const nextCopy = next.copy[locale];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: copy.title,
+  description: copy.summary,
+  url: copy.links[0]?.href,
+  inLanguage: locale,
+  creator: { '@type': 'Person', name: 'Pierrick Deniel' },
+};
+---
+
+<BaseLayout title={`${copy.title} | ${t(locale, 'projectsTitle')}`} description={copy.metaDescription} image={project.image} locale={locale}>
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} slot="head" />
+  <main class="max-w-[var(--width-content)] mx-auto px-[var(--spacing-page)]">
+    <article>
+      <header class="pt-12 pb-8">
+        <a href="/#projects" class="text-sm">{t(locale, 'backToProjects')}</a>
+        <h1 class="mt-8">{copy.title}</h1>
+        <p class="lead mt-4">{copy.summary}</p>
+        <p class="status mt-4 text-sm">
+          <span class="status-dot" aria-hidden="true"></span>
+          {copy.status}
+        </p>
+      </header>
+
+      <figure class="shot">
+        <img
+          src={project.image}
+          width={project.imageWidth}
+          height={project.imageHeight}
+          alt={copy.imageAlt}
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+
+      <dl class="facts">
+        {copy.facts.map((fact) => (
+          <div class="fact">
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      {copy.sections.map((section) => (
+        <section class="case-section">
+          <h2>{section.title}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+      ))}
+
+      <section class="case-section">
+        <h2>{t(locale, 'projectLinks')}</h2>
+        <ul class="links">
+          {copy.links.map((link) => (
+            <li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a></li>
+          ))}
+        </ul>
+      </section>
+    </article>
+
+    <nav class="next" aria-label={t(locale, 'nextProject')}>
+      <span class="text-sm">{t(locale, 'nextProject')}</span>
+      <a href={`/projects/${next.slug}`}>{nextCopy.title}</a>
+    </nav>
+  </main>
+</BaseLayout>
+
+<style>
+  .lead {
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: var(--color-text);
+    max-width: 38ch;
+    text-wrap: pretty;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--color-text);
+  }
+
+  .shot {
+    margin: var(--space-s) 0 var(--space-xl);
+  }
+
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.35);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s) var(--space-m);
+    padding: var(--space-m) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .fact dt {
+    font-size: var(--step--1);
+    color: var(--color-text-muted);
+  }
+
+  .fact dd {
+    margin-top: 0.15rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+  }
+
+  .case-section {
+    padding-top: var(--space-xl);
+  }
+
+  .case-section h2 {
+    margin-bottom: var(--space-s);
+  }
+
+  .case-section p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .case-section p + p {
+    margin-top: var(--space-s);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-m);
+  }
+
+  .next {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .next span {
+    color: var(--color-text-muted);
+  }
+
+  .next a {
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  [data-theme="dark"] .shot img {
+    box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.8);
+  }
+
+  @media (max-width: 480px) {
+    .facts {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -67,6 +67,8 @@ const frUrl = `https://pierrickdeniel.fr${cleanPath}`;
     <meta property="twitter:description" content={description} />
     {image && <meta property="twitter:image" content={new URL(image, Astro.site)} />}
 
+    <slot name="head" />
+
     <!-- Theme detection -->
     <script is:inline>
       const getTheme = () => {
