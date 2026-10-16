@@ -3,11 +3,11 @@
 // domains, a rewrite to the dynamic /fr/projects/[slug] route fails on
 // pierrickdeniel.fr in production.
 import ProjectCase from '@components/ui/ProjectCase.astro';
-import { findProject } from '@/lib/projects';
+import { findProjectForUrl } from '@/lib/projects';
 
 const host = Astro.request.headers.get('host') || '';
 const locale = host.includes('pierrickdeniel.fr') ? 'fr' : 'en';
-const project = findProject(Astro.params.slug);
+const project = findProjectForUrl(Astro.params, Astro.url);
 if (!project) {
   return new Response(null, { status: 404 });
 }
