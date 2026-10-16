@@ -38,7 +38,7 @@ const structuredData = {
         </p>
       </header>
 
-      <figure class="shot">
+      <figure class:list={["shot", { framed: project.framed }]}>
         <img
           src={project.image}
           width={project.imageWidth}
@@ -113,6 +113,9 @@ const structuredData = {
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  .shot.framed img {
     border-radius: 8px;
     border: 1px solid var(--color-border);
     box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.35);
@@ -182,7 +185,7 @@ const structuredData = {
     letter-spacing: -0.02em;
   }
 
-  [data-theme="dark"] .shot img {
+  [data-theme="dark"] .shot.framed img {
     box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.8);
   }
 

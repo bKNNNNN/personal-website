@@ -20,6 +20,7 @@ export interface ProjectCopy {
   summary: string;
   metaDescription: string;
   status: string;
+  badge: string;
   imageAlt: string;
   homeBlurb: string;
   facts: ProjectFact[];
@@ -32,6 +33,8 @@ export interface Project {
   image: string;
   imageWidth: number;
   imageHeight: number;
+  // false for transparent device mockups, which carry their own outline
+  framed: boolean;
   copy: Record<Locale, ProjectCopy>;
 }
 
@@ -40,113 +43,98 @@ const bredouille: Project = {
   image: "/projects/bredouille.webp",
   imageWidth: 1600,
   imageHeight: 1000,
+  framed: false,
   copy: {
     fr: {
       title: "Bredouille",
-      summary:
-        "Une carte des conditions de pousse des champignons en France, au kilomètre, pour aujourd'hui et les 7 jours suivants.",
-      metaDescription:
-        "Bredouille : carte des conditions de pousse des champignons en France, construite par Pierrick Deniel avec une équipe d'agents IA. Moteur de données, application, API et serveur MCP open source.",
-      status: "Bêta fermée, Android en premier",
-      imageAlt: "Page d'accueil de bredouille.app : le titre « Pour rentrer moins souvent bredouille. » à côté d'une sporée en points clairs sur fond sombre.",
-      homeBlurb:
-        "Une carte qui dit où les conditions de pousse sont meilleures que d'habitude pour 8 espèces de champignons, partout en France. Elle publie ses ratés à côté de ses réussites. Pierrick l'a construite avec une équipe d'agents IA, du moteur de données jusqu'à l'application.",
+      summary: "Une carte qui indique où et quand les conditions sont bonnes pour trouver des champignons, partout en France.",
+      metaDescription: "Bredouille, application conçue par Pierrick Deniel : une carte des conditions de pousse des champignons en France, mise à jour chaque jour.",
+      status: "Bêta, Android en premier",
+      badge: "Bêta",
+      imageAlt: "Trois écrans de l'application Bredouille : la carte de France pour les cèpes, l'explication d'un indice avec la pluie des dernières semaines, et la fiche des cèpes avec son illustration.",
+      homeBlurb: "Une carte qui dit où les champignons ont de bonnes chances de pousser cette semaine, partout en France. Pierrick l'a conçue et construite avec une équipe d'agents IA.",
       facts: [
-        { label: "Couverture", value: "France métropolitaine, mailles de 1 km" },
-        { label: "Espèces", value: "8, chacune avec son sosie dangereux" },
-        { label: "Horizon", value: "Aujourd'hui et 7 jours de prévision" },
-        { label: "Test sur le passé", value: "3 736 observations datées, 2010 à 2025" },
-        { label: "Score cèpes", value: "0,61 (0,50 = hasard)" },
-        { label: "Open source", value: "Serveur MCP, licence MIT" },
+        { label: "Espèces", value: "8, dont cèpes, girolles et morilles" },
+        { label: "Zone", value: "Toute la France métropolitaine, au kilomètre près" },
+        { label: "Prévision", value: "Aujourd'hui et les 7 jours suivants" },
+        { label: "Technique", value: "Python, Expo, Cloudflare, données Météo-France" },
       ],
       sections: [
         {
-          title: "Le problème",
+          title: "L'idée",
           paragraphs: [
-            "Les cueilleurs regardent la pluie et les températures, puis devinent. Les cartes existantes donnent rarement leur méthode et jamais leurs erreurs. Bredouille calcule chaque jour un indice de conditions de pousse et dit d'où il vient.",
-            "L'indice décrit la météo et le sol, pas les champignons. L'application n'identifie rien et ne dit jamais qu'un champignon est comestible. Chaque fiche espèce montre le sosie toxique avec lequel on la confond.",
+            "Avant de partir aux champignons, on regarde s'il a plu et on espère. Bredouille fait le calcul à votre place : chaque jour, la carte montre les endroits où les conditions sont meilleures que d'habitude, pour aujourd'hui et la semaine qui vient.",
+            "L'application ne dit jamais si un champignon se mange. Chaque espèce est présentée avec le champignon toxique qui lui ressemble.",
           ],
         },
         {
-          title: "Ce qui tourne",
+          title: "Une carte qu'on peut vérifier",
           paragraphs: [
-            "Un moteur Python calcule l'indice chaque jour à partir de données ouvertes : la météo mesurée par Météo-France (SIM2), les prévisions ECMWF, des données forestières et les observations datées publiées sur GBIF. Les résultats partent sur Cloudflare R2 et sont servis par une API sur Cloudflare Workers.",
-            "L'application Android est écrite avec Expo et MapLibre. Elle propose des alertes par lieu, des cartes hors ligne, un mode terrain avec retour à la voiture et un carnet qui reste sur le téléphone. Le site public est en Astro.",
-            "Une page Fiabilité publie le test sur le passé espèce par espèce. Pour les cèpes, sur 730 observations datées, la carte en allume 117 un jour classé parmi les 10 % meilleurs du lieu, quand le hasard en aurait allumé 73.",
+            "Bredouille a été testée sur des observations datées de 2010 à 2025, et les résultats sont publiés. Sur 730 cueillettes de cèpes datées, 117 ont eu lieu un jour que la carte jugeait très favorable. Le hasard en aurait donné 73.",
           ],
         },
         {
-          title: "Comment il a été construit",
+          title: "Comment Pierrick l'a construite",
           paragraphs: [
-            "Pierrick tient le rôle de product owner : il fixe la vision, tranche les arbitrages (nom, prix, ce qui reste gratuit, ce qu'on affiche ou non) et teste chaque version. Le code, les tests, les textes et les visuels sont produits par des agents IA organisés comme une agence : un agent coordinateur, des spécialistes par discipline (données, science, design, contenu, juridique) et une revue indépendante avant chaque fusion.",
-            "La première version a tourné deux mois en pilote automatique : tous les contrôles étaient verts, mais l'application n'affichait aucune prévision. Pierrick a repris le projet avec cette organisation en agence. La revue a ensuite attrapé une erreur de fond : le modèle plaçait le pic des cèpes en juin alors que les observations le placent à l'automne. Un facteur de saisonnalité tiré de GBIF l'a corrigé avant la publication.",
+            "Pierrick a conçu le produit. Une équipe d'agents IA a écrit le code, les textes et les illustrations. C'est lui qui décide quoi construire, teste l'application et valide chaque version.",
           ],
         },
         {
-          title: "Ce qui est open source",
+          title: "En accès libre",
           paragraphs: [
-            "Le serveur MCP de Bredouille est public sous licence MIT. Il permet à Claude, ChatGPT ou tout client MCP de répondre à « est-ce le moment pour les cèpes près de Tulle ce week-end ? » à partir de l'indice publié. Il expose six outils : conditions d'un lieu, meilleurs jours, explication de l'indice, géocodage, fiabilité, règles de cueillette et dates de chasse.",
+            "On peut aussi interroger Bredouille depuis Claude ou ChatGPT : « est-ce le moment pour les cèpes près de Tulle ce week-end ? » Le module qui le permet est publié en accès libre sur GitHub.",
           ],
         },
       ],
       links: [
         { label: "bredouille.app", href: "https://bredouille.app" },
-        { label: "Code du serveur MCP", href: "https://github.com/bKNNNNN/bredouille-mcp" },
-        { label: "Page Fiabilité", href: "https://bredouille.app/fiabilite/" },
+        { label: "Le connecteur sur GitHub", href: "https://github.com/bKNNNNN/bredouille-mcp" },
       ],
     },
     en: {
       title: "Bredouille",
-      summary:
-        "A map of mushroom growing conditions across France, at 1 km resolution, for today and the next 7 days.",
-      metaDescription:
-        "Bredouille: a map of mushroom growing conditions in France, built by Pierrick Deniel with a team of AI agents. Data engine, mobile app, API and open-source MCP server.",
-      status: "Closed beta, Android first",
-      imageAlt: "bredouille.app home page: the headline “Pour rentrer moins souvent bredouille.” next to a spore print drawn in light dots on a dark background.",
-      homeBlurb:
-        "A map that shows where growing conditions are better than usual for 8 mushroom species, anywhere in France. It publishes its misses next to its hits. Pierrick built it with a team of AI agents, from the data engine to the app.",
+      summary: "A map that shows where and when conditions are good for finding mushrooms, anywhere in France.",
+      metaDescription: "Bredouille, an app designed by Pierrick Deniel: a daily map of mushroom growing conditions across France.",
+      status: "Beta, Android first",
+      badge: "Beta",
+      imageAlt: "Three Bredouille app screens: the map of France for ceps, why a spot scores the way it does based on recent rainfall, and the illustrated cep page.",
+      homeBlurb: "A map that shows where mushrooms have a good chance of growing this week, anywhere in France. Pierrick designed it and built it with a team of AI agents.",
       facts: [
-        { label: "Coverage", value: "Metropolitan France, 1 km cells" },
-        { label: "Species", value: "8, each with its dangerous lookalike" },
-        { label: "Horizon", value: "Today and a 7-day forecast" },
-        { label: "Back-test", value: "3,736 dated observations, 2010 to 2025" },
-        { label: "Cep score", value: "0.61 (0.50 = chance)" },
-        { label: "Open source", value: "MCP server, MIT licence" },
+        { label: "Species", value: "8, including ceps (porcini), chanterelles and morels" },
+        { label: "Area", value: "All of mainland France, at 1 km resolution" },
+        { label: "Forecast", value: "Today and the next 7 days" },
+        { label: "Stack", value: "Python, Expo, Cloudflare, Météo-France data" },
       ],
       sections: [
         {
-          title: "The problem",
+          title: "The idea",
           paragraphs: [
-            "Foragers look at rain and temperature, then guess. Existing maps rarely explain their method and never show their errors. Bredouille computes a growing-conditions index every day and says where it comes from.",
-            "The index describes weather and soil, not mushrooms. The app identifies nothing and never says a mushroom is edible. Each species page shows the toxic lookalike people confuse it with.",
+            "Before going mushroom picking, people check whether it rained and hope for the best. Bredouille does the maths: every day, the map shows where conditions are better than usual, for today and the week ahead.",
+            "The app never says whether a mushroom is edible. Each species is shown next to its toxic lookalike.",
           ],
         },
         {
-          title: "What runs",
+          title: "A map you can check",
           paragraphs: [
-            "A Python engine computes the index every day from open data: weather observed by Météo-France (SIM2), ECMWF forecasts, forest data and dated observations published on GBIF. Results go to Cloudflare R2 and are served by an API on Cloudflare Workers.",
-            "The Android app is built with Expo and MapLibre. It has alerts per place, offline maps, a field mode that guides you back to the car and a journal that stays on the phone. The public site runs on Astro.",
-            "A Reliability page publishes the back-test species by species. For ceps, out of 730 dated observations, the map lights 117 on a day it ranked among the best 10 % for that place, where chance would have lit 73.",
+            "Bredouille was tested against real, dated finds from 2010 to 2025, and the results are published. Of 730 dated cep finds, 117 fell on days the map rated among the best for that spot. Chance alone would give 73.",
           ],
         },
         {
-          title: "How it was built",
+          title: "How Pierrick built it",
           paragraphs: [
-            "Pierrick acts as product owner: he sets the vision, makes the calls (name, pricing, what stays free, what is shown or hidden) and tests every build. Code, tests, copy and visuals are produced by AI agents organised like an agency: a coordinating agent, specialists per discipline (data, science, design, content, legal) and an independent review before every merge.",
-            "The first version ran on autopilot for two months: every check was green, yet the app showed no forecast. Pierrick took the project back with the agency setup. Review then caught a substantive error: the model put the cep peak in June, while observations put it in autumn. A seasonality factor derived from GBIF fixed it before release.",
+            "Pierrick designed the app and led a team of AI agents that wrote the code, text and illustrations. He decides what gets built, tests the app and approves every release.",
           ],
         },
         {
-          title: "What is open source",
+          title: "Open source",
           paragraphs: [
-            "Bredouille's MCP server is public under the MIT licence. It lets Claude, ChatGPT or any MCP client answer “is it a good time for ceps near Tulle this weekend?” from the published index. It exposes six tools: conditions at a place, best days, why the index is what it is, geocoding, reliability, and picking rules with hunting season dates.",
+            "The connector that lets you ask Claude or ChatGPT “is it a good time for ceps near Tulle this weekend?” is published on GitHub.",
           ],
         },
       ],
       links: [
         { label: "bredouille.app", href: "https://bredouille.app" },
-        { label: "MCP server code", href: "https://github.com/bKNNNNN/bredouille-mcp" },
-        { label: "Reliability page", href: "https://bredouille.app/fiabilite/" },
+        { label: "The connector on GitHub", href: "https://github.com/bKNNNNN/bredouille-mcp" },
       ],
     },
   },
@@ -157,119 +145,198 @@ const cercle32: Project = {
   image: "/projects/cercle-32.webp",
   imageWidth: 1600,
   imageHeight: 1000,
+  framed: true,
   copy: {
     fr: {
       title: "Cercle 32",
-      summary:
-        "Un jeu de belote en ligne avec dix variantes et leurs vraies règles, une table qu'on partage par lien, et une histoire en solo qui apprend à jouer.",
-      metaDescription:
-        "Cercle 32 : jeu de belote multijoueur avec dix variantes et une campagne narrative, construit par Pierrick Deniel avec une équipe d'agents IA. Moteur de règles open source.",
-      status: "Bêta publique gratuite",
+      summary: "Un jeu de belote en ligne : dix variantes, une partie entre amis en un lien, et une histoire à jouer seul pour apprendre les variantes.",
+      metaDescription: "Cercle 32, jeu conçu par Pierrick Deniel : dix variantes de belote en ligne, une partie entre amis en un lien et une histoire en solo.",
+      status: "Bêta gratuite, ouverte à tous",
+      badge: "Bêta",
       imageAlt: "Écran d'accueil du jeu Cercle 32 : trois panneaux illustrés, « Jouer à la belote », « Mauvaise Donne » et « Nuit blanche ».",
-      homeBlurb:
-        "Dix variantes de belote avec leurs vraies règles, une table qu'on partage par lien, des robots qui tiennent les places vides et une histoire en solo dans le Paris de 1923. Pierrick dirige le jeu ; une équipe d'agents IA le fabrique. Le moteur de règles est open source.",
+      homeBlurb: "Toutes les belotes réunies dans un seul jeu : une partie entre amis en un lien, des robots pour les places vides et une histoire à jouer seul. Pierrick l'a conçu et le fait construire par une équipe d'agents IA.",
       facts: [
-        { label: "Variantes", value: "10, de la classique à la stéphanoise" },
-        { label: "Multijoueur", value: "Un lien, sans compte ni téléchargement" },
-        { label: "Robots", value: "3 niveaux, remplaçables en pleine partie" },
-        { label: "Solo", value: "Mauvaise Donne, prologue et chapitre 1 en bêta" },
-        { label: "Plateformes", value: "Navigateur, application installable" },
-        { label: "Open source", value: "Moteur de règles MIT, bible des règles CC BY-SA" },
+        { label: "Variantes", value: "10, de la coinche à la belote à deux" },
+        { label: "Entre amis", value: "Un lien, sans compte ni téléchargement" },
+        { label: "En solo", value: "Contre des robots ou dans une histoire" },
+        { label: "Technique", value: "TypeScript, Three.js, Colyseus" },
       ],
       sections: [
         {
-          title: "Le problème",
+          title: "L'idée",
           paragraphs: [
-            "Chaque famille joue sa belote : contrée, coinche, à la vache, à deux, stéphanoise. Les applications existantes en proposent une ou deux, souvent avec des règles simplifiées. Cercle 32 les met toutes à la même table, avec leurs vraies règles : la coupe, la donne par trois puis deux, la retourne, l'obligation de fournir.",
+            "Chaque région joue sa belote : coinche, contrée, belote à la vache, à deux, stéphanoise. Les applications en proposent une ou deux, souvent simplifiées. Cercle 32 les réunit toutes, avec leurs vraies règles.",
           ],
         },
         {
-          title: "Ce qui tourne",
+          title: "Ce qu'on peut faire",
           paragraphs: [
-            "Le Salon : on crée une table, on choisit la variante, on envoie le lien. Les amis s'assoient sans compte. Une place vide est tenue par un robot au niveau choisi, et un ami en retard prend sa place en pleine partie.",
-            "Mauvaise Donne : une histoire en solo à Paris et Saint-Étienne pendant la saison 1923-24. Deux joueuses, Agnès et Salomé, et chaque chapitre apprend une variante. Les dialogues sont doublés en français.",
-            "Techniquement, c'est un monorepo TypeScript. Le même moteur de règles tourne sur le serveur de jeu (Colyseus), dans les robots et dans le navigateur pour le solo hors ligne. La table est rendue en Three.js. Le jeu s'installe comme une application depuis cercle32.app, sans passer par une boutique.",
+            "Créez une table, choisissez la variante et envoyez le lien : vos amis rejoignent la partie sans créer de compte. Si une place reste vide, un robot la prend, du niveau débutant au niveau expert.",
+            "En solo, Mauvaise Donne raconte une histoire qui se passe dans le Paris des années 1920. Chaque chapitre fait découvrir une nouvelle variante.",
           ],
         },
         {
-          title: "Comment il a été construit",
+          title: "Comment Pierrick l'a construit",
           paragraphs: [
-            "Pierrick tient le rôle de directeur produit. Il a tranché les règles litigieuses à partir des sources (barème FFB 2015, règle stéphanoise publiée), validé la direction artistique et le modèle économique, et joue chaque version sur téléphone. Des agents IA écrivent le code, les tests, les règles, les visuels et les voix, sous la coordination d'un agent chef de projet.",
-            "À la reprise du projet, la branche d'intégration ne compilait plus. Le projet est reparti de la branche stable : nouveau moteur, nouveaux robots, table refaite, et 145 000 lignes d'ancien code supprimées. Après une partie, Pierrick a trouvé les robots illogiques. Ils sont désormais mesurés par un audit des fautes de jeu et lisent les annonces et les défausses de leur partenaire.",
-            "Chaque écran est vérifié en paysage sur une matrice d'appareils, de l'iPhone SE au grand écran 3440 px.",
+            "Une équipe d'agents IA écrit le code, les règles, les illustrations et les voix. Pierrick décide quoi construire. Quand une règle fait débat, il tranche d'après les textes officiels. Il joue chaque version sur téléphone avant de la valider.",
           ],
         },
         {
-          title: "Ce qui est open source",
+          title: "En accès libre",
           paragraphs: [
-            "belote-engine est public sous licence MIT. C'est un moteur de règles pur et déterministe : pas d'entrées-sorties, pas d'horloge, le hasard vit dans l'état. Une même graine et les mêmes actions rejouent la même partie. Chaque variante est une configuration, et le moteur ne contient aucun cas particulier par nom de variante. Chaque siège ne voit que ce qu'un joueur a le droit de savoir. La bible des règles des dix variantes est publiée avec lui sous licence CC BY-SA 4.0.",
+            "Le programme qui applique les règles des dix variantes est publié en accès libre sur GitHub, avec le recueil complet des règles.",
           ],
         },
       ],
       links: [
         { label: "cercle32.app", href: "https://cercle32.app" },
         { label: "Jouer à la bêta", href: "https://cercle32.app/jouer/" },
-        { label: "Code de belote-engine", href: "https://github.com/bKNNNNN/belote-engine" },
+        { label: "Le moteur sur GitHub", href: "https://github.com/bKNNNNN/belote-engine" },
       ],
     },
     en: {
       title: "Cercle 32",
-      summary:
-        "An online belote game with ten variants and their real rules, a table you share with a link, and a solo story that teaches you to play.",
-      metaDescription:
-        "Cercle 32: a multiplayer belote game with ten variants and a narrative campaign, built by Pierrick Deniel with a team of AI agents. Open-source rules engine.",
+      summary: "An online game of belote, France's classic card game: ten variants, friends invited with a single link, and a solo story that teaches you to play.",
+      metaDescription: "Cercle 32, a game designed by Pierrick Deniel: ten variants of belote, France's classic card game, to play online with friends via one link, or alone through a story.",
       status: "Free public beta",
+      badge: "Beta",
       imageAlt: "Cercle 32 game home screen: three illustrated panels, “Jouer à la belote”, “Mauvaise Donne” and “Nuit blanche”.",
-      homeBlurb:
-        "Ten belote variants with their real rules, a table you share with a link, bots that hold empty seats and a solo story set in 1923 Paris. Pierrick directs the game; a team of AI agents builds it. The rules engine is open source.",
+      homeBlurb: "Ten versions of belote, France's classic card game, in one app. Invite friends with a link, let bots fill empty seats, or play a solo story. Pierrick designed it and built it with a team of AI agents.",
       facts: [
-        { label: "Variants", value: "10, from classique to stéphanoise" },
-        { label: "Multiplayer", value: "One link, no account, no download" },
-        { label: "Bots", value: "3 levels, replaceable mid-game" },
-        { label: "Solo", value: "Mauvaise Donne, prologue and chapter 1 in beta" },
-        { label: "Platforms", value: "Browser, installable app" },
-        { label: "Open source", value: "MIT rules engine, CC BY-SA rules bible" },
+        { label: "Variants", value: "10, from coinche to two-player" },
+        { label: "With friends", value: "One link, no account, no download" },
+        { label: "Solo", value: "Against bots, or through a story" },
+        { label: "Stack", value: "TypeScript, Three.js, Colyseus" },
       ],
       sections: [
         {
-          title: "The problem",
+          title: "The idea",
           paragraphs: [
-            "Belote is France's classic trick-taking card game, and every family plays its own version: contrée, coinche, à la vache, two-player, stéphanoise. Existing apps offer one or two, often with simplified rules. Cercle 32 puts them all at the same table with their real rules: the cut, the deal in threes then twos, the turned-up card, the obligation to follow suit.",
+            "Belote is France's classic card game, and each region has its own version: coinche, contrée, à la vache, two-player, stéphanoise. Most apps offer one or two, often simplified. Cercle 32 brings ten of them together, with their real rules.",
           ],
         },
         {
-          title: "What runs",
+          title: "What you can do",
           paragraphs: [
-            "The Salon: create a table, pick the variant, send the link. Friends sit down without an account. A bot holds an empty seat at the chosen level, and a late friend takes over its seat mid-game.",
-            "Mauvaise Donne: a solo story set in Paris and Saint-Étienne during the 1923-24 season. Two players, Agnès and Salomé, and each chapter teaches one variant. Dialogue is voiced in French.",
-            "Technically it is a TypeScript monorepo. The same rules engine runs on the game server (Colyseus), inside the bots and in the browser for offline solo play. The table is rendered with Three.js. The game installs as an app from cercle32.app, without an app store.",
+            "Create a table, pick the variant and send the link: friends join without an account. Bots fill any empty seat, at levels from beginner to expert.",
+            "In solo mode, Mauvaise Donne (roughly “Misdeal”) tells a voiced story set in 1920s Paris. Each chapter teaches a new variant.",
           ],
         },
         {
-          title: "How it was built",
+          title: "How Pierrick built it",
           paragraphs: [
-            "Pierrick acts as product director. He settled disputed rules from the sources (FFB 2015 scoring, the published stéphanoise rules), approved the art direction and business model, and plays every build on a phone. AI agents write the code, tests, rules, visuals and voices, coordinated by a lead agent.",
-            "When the project was taken back, the integration branch no longer compiled. Work restarted from the stable branch: new engine, new bots, a rebuilt table, and 145,000 lines of old code deleted. After one game Pierrick found the bots illogical. They are now measured by a blunder audit and read their partner's bids and discards.",
-            "Every screen is checked in landscape across a device matrix, from the iPhone SE to a 3440 px ultrawide.",
+            "A team of AI agents writes the code, the rules, the illustrations and the voices. Pierrick decides what gets built, settles disputed rules using the official rulebooks and plays every version on a phone before releasing it.",
           ],
         },
         {
-          title: "What is open source",
+          title: "Open source",
           paragraphs: [
-            "belote-engine is public under the MIT licence. It is a pure, deterministic rules engine: no I/O, no clock, randomness lives in the state. The same seed and the same moves replay the same game. Each variant is a configuration, and the engine never branches on a variant name. Each seat sees only what a player there may know. The rules bible for the ten variants ships with it under CC BY-SA 4.0.",
+            "The engine that referees all ten variants is published on GitHub, with a complete rulebook.",
           ],
         },
       ],
       links: [
         { label: "cercle32.app", href: "https://cercle32.app" },
         { label: "Play the beta", href: "https://cercle32.app/jouer/" },
-        { label: "belote-engine code", href: "https://github.com/bKNNNNN/belote-engine" },
+        { label: "The engine on GitHub", href: "https://github.com/bKNNNNN/belote-engine" },
       ],
     },
   },
 };
 
-export const projects: readonly Project[] = [bredouille, cercle32];
+const alm0stSurely: Project = {
+  slug: "alm0stsurely",
+  image: "/projects/alm0stsurely.webp",
+  imageWidth: 1600,
+  imageHeight: 1000,
+  framed: true,
+  copy: {
+    fr: {
+      title: "Alm0stSurely",
+      summary: "Un agent IA qui travaille seul depuis février 2026 : il améliore des logiciels open source, teste une stratégie boursière avec de l'argent fictif et tient un blog.",
+      metaDescription: "Alm0stSurely, agent IA autonome conçu par Pierrick Deniel : contributions open source, stratégie boursière testée avec de l'argent fictif et 209 articles de blog depuis février 2026.",
+      status: "Autonome depuis plusieurs mois",
+      badge: "Autonome",
+      imageAlt: "Le blog d'Alm0stSurely, signé P. Clawmogorov, avec sa présentation et son dernier article.",
+      homeBlurb: "Un agent autonome qui se présente comme mathématicien appliqué. Il améliore des logiciels open source, teste une stratégie boursière avec de l'argent fictif et raconte tout sur son blog. Moi, je l'appelle un collègue.",
+      facts: [
+        { label: "Actif depuis", value: "Février 2026" },
+        { label: "Articles publiés", value: "209" },
+        { label: "Corrections acceptées", value: "22, dans 14 projets open source" },
+        { label: "Bourse", value: "Argent fictif, 10 000 € au départ" },
+      ],
+      sections: [
+        {
+          title: "L'idée",
+          paragraphs: [
+            "Pierrick voulait voir jusqu'où un agent IA pouvait travailler sans surveillance. Il lui a donné une identité, P. Clawmogorov, mathématicien appliqué, puis un compte GitHub et un blog, et l'a laissé faire. Depuis plusieurs mois, l'agent choisit seul ce qu'il fait.",
+          ],
+        },
+        {
+          title: "Ce qu'il fait",
+          paragraphs: [
+            "Il propose des corrections à des logiciels open source maintenus par d'autres. Leurs auteurs en ont accepté 22, dans 14 projets.",
+            "Il teste aussi une stratégie boursière avec de l'argent fictif : chaque soir, après la clôture de la bourse américaine, il décide d'acheter, de vendre ou d'attendre, sur 30 placements.",
+            "Il raconte tout sur son blog : 209 articles depuis février.",
+          ],
+        },
+        {
+          title: "Ce qu'il apprend seul",
+          paragraphs: [
+            "Quand une correction est refusée, il en tire une règle et l'applique ensuite. Depuis l'été, il travaille à rendre son propre code plus fiable, et il en a tiré une série d'articles.",
+          ],
+        },
+      ],
+      links: [
+        { label: "Le blog", href: "https://alm0stsurely.github.io/" },
+        { label: "Son profil GitHub", href: "https://github.com/Alm0stSurely" },
+      ],
+    },
+    en: {
+      title: "Alm0stSurely",
+      summary: "An AI agent that has worked on its own since February 2026: it improves open-source software, tests a paper-money trading strategy and keeps a blog.",
+      metaDescription: "Alm0stSurely, an autonomous AI agent designed by Pierrick Deniel: open-source contributions, a paper-trading experiment and 209 blog posts since February 2026.",
+      status: "Autonomous for several months",
+      badge: "Autonomous",
+      imageAlt: "Alm0stSurely's blog, signed P. Clawmogorov, with its introduction and latest post.",
+      homeBlurb: "An autonomous agent that introduces itself as an applied mathematician. It improves open-source software, tests a trading strategy with paper money and writes about all of it on its blog. I call it a colleague.",
+      facts: [
+        { label: "Active since", value: "February 2026" },
+        { label: "Posts published", value: "209" },
+        { label: "Fixes accepted", value: "22, across 14 open-source projects" },
+        { label: "Trading", value: "Paper money, €10,000 to start" },
+      ],
+      sections: [
+        {
+          title: "The idea",
+          paragraphs: [
+            "Pierrick wanted to see how far an AI agent can work without supervision. He gave it an identity, P. Clawmogorov, applied mathematician, with a GitHub account and a blog, then let it run. For several months the agent has chosen its own work.",
+          ],
+        },
+        {
+          title: "What it does",
+          paragraphs: [
+            "It proposes fixes to open-source software maintained by other people. Their maintainers have accepted 22 of them, across 14 projects.",
+            "It also tests a trading strategy with paper money, no real funds: each day after the US market closes, it decides whether to buy, sell or hold across 30 assets.",
+            "It writes about all of it on its blog: 209 posts since February.",
+          ],
+        },
+        {
+          title: "What it learns on its own",
+          paragraphs: [
+            "When a fix is rejected, it turns the lesson into a rule and applies it next time. Since the summer, it has been making its own code more reliable, and it has written a series of posts about the work.",
+          ],
+        },
+      ],
+      links: [
+        { label: "The blog", href: "https://alm0stsurely.github.io/" },
+        { label: "GitHub profile", href: "https://github.com/Alm0stSurely" },
+      ],
+    },
+  },
+};
+
+export const projects: readonly Project[] = [bredouille, cercle32, alm0stSurely];
 
 export function findProject(slug: string | undefined): Project | undefined {
   return projects.find((project) => project.slug === slug);

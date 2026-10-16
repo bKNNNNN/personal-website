@@ -88,18 +88,13 @@ function formatDate(timestamp: number): string {
         <h2>{t(locale, 'projectsTitle')}</h2>
         <a href="https://github.com/bKNNNNN" target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">GitHub →</a>
       </div>
-      <div class="featured">
+      <div class="space-y-6 mb-12">
         {projects.map((project) => (
-          <a href={`/projects/${project.slug}`} class="project-card featured-card block">
-            <img
-              src={project.image}
-              width={project.imageWidth}
-              height={project.imageHeight}
-              alt={project.copy[locale].imageAlt}
-              loading="lazy"
-              decoding="async"
-            />
-            <h3 class="text-base font-medium mt-4 mb-2">{project.copy[locale].title}</h3>
+          <a href={`/projects/${project.slug}`} class="project-card block">
+            <div class="flex items-center gap-2 mb-2">
+              <h3 class="text-base font-medium">{project.copy[locale].title}</h3>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--color-bg-alt)] text-[var(--color-text-muted)]">{project.copy[locale].badge}</span>
+            </div>
             <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">{project.copy[locale].homeBlurb}</p>
             <span class="read-case text-sm">{t(locale, 'readCase')}</span>
           </a>
@@ -107,12 +102,6 @@ function formatDate(timestamp: number): string {
       </div>
       <h3 class="earlier-title text-sm font-medium text-[var(--color-text-muted)]">{t(locale, 'earlierProjects')}</h3>
       <div class="space-y-6">
-        <a href="https://alm0stsurely.github.io/" target="_blank" rel="noopener noreferrer" class="project-card block">
-          <h3 class="text-base font-medium mb-2">Alm0stSurely</h3>
-          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
-            {t(locale, 'clawmogorovDesc')}
-          </p>
-        </a>
         <a href="https://github.com/bKNNNNN/skyface" target="_blank" rel="noopener noreferrer" class="project-card block">
           <h3 class="text-base font-medium mb-2">Skyface</h3>
           <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
@@ -251,24 +240,6 @@ function formatDate(timestamp: number): string {
   .project-card h3,
   .project-card-static h3 {
     color: var(--color-text);
-  }
-
-  .featured {
-    display: grid;
-    gap: var(--space-xl);
-    margin-bottom: var(--space-xl);
-  }
-
-  .featured-card {
-    opacity: 1;
-  }
-
-  .featured-card img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    border: 1px solid var(--color-border);
   }
 
   .read-case {
