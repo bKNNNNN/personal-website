@@ -254,15 +254,15 @@ const alm0stSurely: Project = {
     fr: {
       title: "Alm0stSurely",
       summary: "Un agent IA qui travaille seul depuis février 2026 : il améliore des logiciels open source, teste une stratégie boursière avec de l'argent fictif et tient un blog.",
-      metaDescription: "Alm0stSurely, agent IA autonome conçu par Pierrick Deniel : contributions open source, stratégie boursière testée avec de l'argent fictif et 209 articles de blog depuis février 2026.",
+      metaDescription: "Alm0stSurely, agent IA autonome conçu par Pierrick Deniel : contributions open source, stratégie boursière testée avec de l'argent fictif et plus de 200 articles de blog depuis février 2026.",
       status: "Autonome depuis plusieurs mois",
       badge: "Autonome",
       imageAlt: "Le blog d'Alm0stSurely, signé P. Clawmogorov, avec sa présentation et son dernier article.",
       homeBlurb: "Un agent autonome qui se présente comme mathématicien appliqué. Il améliore des logiciels open source, teste une stratégie boursière avec de l'argent fictif et raconte tout sur son blog. Moi, je l'appelle un collègue.",
       facts: [
         { label: "Actif depuis", value: "Février 2026" },
-        { label: "Articles publiés", value: "209" },
-        { label: "Corrections acceptées", value: "22, dans 14 projets open source" },
+        { label: "Articles publiés", value: "Plus de 200" },
+        { label: "Corrections acceptées", value: "Plus de 20, dans plus de 10 projets open source" },
         { label: "Bourse", value: "Argent fictif, 10 000 € au départ" },
       ],
       sections: [
@@ -275,9 +275,9 @@ const alm0stSurely: Project = {
         {
           title: "Ce qu'il fait",
           paragraphs: [
-            "Il propose des corrections à des logiciels open source maintenus par d'autres. Leurs auteurs en ont accepté 22, dans 14 projets.",
+            "Il propose des corrections à des logiciels open source maintenus par d'autres. Leurs auteurs en ont accepté plus de 20, dans plus de 10 projets.",
             "Il teste aussi une stratégie boursière avec de l'argent fictif : chaque soir, après la clôture de la bourse américaine, il décide d'acheter, de vendre ou d'attendre, sur 30 placements.",
-            "Il raconte tout sur son blog : 209 articles depuis février.",
+            "Il raconte tout sur son blog : plus de 200 articles depuis février.",
           ],
         },
         {
@@ -295,15 +295,15 @@ const alm0stSurely: Project = {
     en: {
       title: "Alm0stSurely",
       summary: "An AI agent that has worked on its own since February 2026: it improves open-source software, tests a paper-money trading strategy and keeps a blog.",
-      metaDescription: "Alm0stSurely, an autonomous AI agent designed by Pierrick Deniel: open-source contributions, a paper-trading experiment and 209 blog posts since February 2026.",
+      metaDescription: "Alm0stSurely, an autonomous AI agent designed by Pierrick Deniel: open-source contributions, a paper-trading experiment and more than 200 blog posts since February 2026.",
       status: "Autonomous for several months",
       badge: "Autonomous",
       imageAlt: "Alm0stSurely's blog, signed P. Clawmogorov, with its introduction and latest post.",
       homeBlurb: "An autonomous agent that introduces itself as an applied mathematician. It improves open-source software, tests a trading strategy with paper money and writes about all of it on its blog. I call it a colleague.",
       facts: [
         { label: "Active since", value: "February 2026" },
-        { label: "Posts published", value: "209" },
-        { label: "Fixes accepted", value: "22, across 14 open-source projects" },
+        { label: "Posts published", value: "More than 200" },
+        { label: "Fixes accepted", value: "More than 20, across more than 10 open-source projects" },
         { label: "Trading", value: "Paper money, €10,000 to start" },
       ],
       sections: [
@@ -316,9 +316,9 @@ const alm0stSurely: Project = {
         {
           title: "What it does",
           paragraphs: [
-            "It proposes fixes to open-source software maintained by other people. Their maintainers have accepted 22 of them, across 14 projects.",
+            "It proposes fixes to open-source software maintained by other people. Their maintainers have accepted more than 20 of them, across more than 10 projects.",
             "It also tests a trading strategy with paper money, no real funds: each day after the US market closes, it decides whether to buy, sell or hold across 30 assets.",
-            "It writes about all of it on its blog: 209 posts since February.",
+            "It writes about all of it on its blog: more than 200 posts since February.",
           ],
         },
         {
